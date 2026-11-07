@@ -17,7 +17,8 @@ Jede Person wählt **genau ein Gericht**, optional mit Namen, und sieht danach e
 | `results.html` | Ergebnisse |
 | `menu.json` | **Speisekarte**: Nummer, Name, Preis, `ham: true` für `*`, Beschreibung `de`/`ru` |
 | `i18n.json` | **Texte der Oberfläche** und Kategorien (Titel, Hinweise, Pizza-Beläge) in DE/RU |
-| `config.js` | Zugangsdaten für den Speicherdienst (Supabase) |
+| `server.js`, `Dockerfile` | Kleiner Server zum Speichern der Stimmen (für Coolify / Docker) |
+| `config.js` | Nur für Supabase nötig (bei eigenem Server leer lassen) |
 | `supabase-setup.sql` | Tabelle + Rechte für Supabase |
 | `css/`, `js/` | Design und Logik |
 
@@ -26,17 +27,54 @@ eine `id` anlegen und in `i18n.json` unter `categories` für `de` und `ru` einen
 
 ## Lokal ansehen
 
-Die Seite lädt JSON-Dateien, deshalb nicht per Doppelklick öffnen, sondern einen kleinen Server starten:
+Die Seite lädt JSON-Dateien, deshalb nicht per Doppelklick öffnen, sondern starten mit:
 
 ```bash
+node server.js            # mit Speicherung, http://localhost:3000
+# oder ohne Speicherung (Demo-Modus):
 python3 -m http.server 8000
-# dann http://localhost:8000 öffnen
 ```
 
-## Stimmen speichern (Supabase)
+## Hosten mit Coolify (empfohlen)
 
-Ohne Konfiguration läuft die Seite im **Demo-Modus**: Stimmen landen nur im eigenen Browser.
-Für echte Umfragen:
+Das Repo enthält einen kleinen Server (`server.js`, ohne Abhängigkeiten) und ein `Dockerfile`.
+Der Server liefert die Seite aus und speichert die Stimmen in `/data/votes.json`.
+
+1. In Coolify: **+ New → Application → Public/Private Repository (GitHub)** → dieses Repo und den Branch wählen.
+2. **Build Pack: Dockerfile**, **Ports Exposes: `3000`**, Domain eintragen.
+3. Unter **Storages → + Add → Volume Mount**: Destination Path `/data`
+   (wichtig, sonst sind die Stimmen nach jedem Deploy weg).
+4. Unter **Environment Variables** (optional, aber empfohlen):
+   - `RESULTS_PASSWORD` – Passwort für die Ergebnisseite (ohne = Ergebnisse öffentlich)
+   - `ADMIN_PASSWORD` – erlaubt das Zurücksetzen aller Stimmen (siehe unten)
+5. **Deploy**.
+
+Danach: Umfrage unter `https://deine-domain/`, Ergebnisse unter `https://deine-domain/results`.
+
+Der Server prüft, dass die Gerichtsnummer existiert, kürzt Namen auf 60 Zeichen und setzt
+zusätzlich zum localStorage-Merker ein Cookie, damit derselbe Browser nicht zweimal abstimmen kann.
+
+**Alle Stimmen löschen** (z. B. für eine neue Runde):
+
+```bash
+curl -X DELETE -H "Authorization: Bearer DEIN_ADMIN_PASSWORT" https://deine-domain/api/votes
+```
+
+**Stimmen sichern:** Die Datei `votes.json` liegt im Volume; in Coolify kannst du sie unter
+Storages einsehen oder per `curl -H "Authorization: Bearer RESULTS_PASSWORD" https://deine-domain/api/votes` abrufen.
+
+Lokal mit Server testen:
+
+```bash
+RESULTS_PASSWORD=test node server.js   # http://localhost:3000
+# oder mit Docker:
+docker build -t irrbuehl-umfrage . && docker run -p 3000:3000 -v irrbuehl-data:/data irrbuehl-umfrage
+```
+
+## Alternative: nur statisch (GitHub Pages / Vercel + Supabase)
+
+Ohne eigenen Server läuft die Seite im **Demo-Modus**: Stimmen landen nur im eigenen Browser.
+Für echte Umfragen mit rein statischem Hosting:
 
 1. Kostenloses Projekt auf <https://supabase.com> anlegen.
 2. Im Dashboard **SQL Editor** öffnen, Inhalt von `supabase-setup.sql` einfügen und ausführen.
@@ -57,7 +95,7 @@ wer den Browserspeicher löscht oder ein anderes Gerät nutzt, könnte erneut ab
 
 Zum Testen zurücksetzen (Browser-Konsole): `localStorage.removeItem("irrbuehl_voted")`
 
-## Hosten
+## Statisches Hosting
 
 **GitHub Pages:** Repo pushen → *Settings → Pages* → Source „Deploy from a branch“,
 Branch `main`, Ordner `/ (root)` → Speichern. Nach kurzer Zeit unter

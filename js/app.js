@@ -103,7 +103,7 @@
     els.langBtn.textContent = lang === "de" ? "RU" : "DE";
     els.langBtn.setAttribute("aria-label", t().langSwitch);
     els.langBtn.title = t().langSwitch;
-    els.demo.hidden = S.hasBackend;
+    S.detectBackend().then(m => { els.demo.hidden = m !== "demo"; });
     const voted = getVoted();
     if (voted) { showThanks(voted, false); return; }
     renderMenu();
@@ -149,6 +149,12 @@
       showThanks(voted, true);
     } catch (err) {
       console.error(err);
+      if (err.status === 409) { // Server kennt diesen Browser schon
+        const voted = { nr: item.nr, name: item.name, already: true };
+        S.store.set(VOTED_KEY, JSON.stringify(voted));
+        showThanks(voted, false);
+        return;
+      }
       els.error.textContent = t().error;
       els.error.hidden = false;
       els.submit.disabled = false;

@@ -1,0 +1,5 @@
+.git
+data
+node_modules
+*.md
+supabase-setup.sql

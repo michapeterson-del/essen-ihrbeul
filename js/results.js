@@ -1,7 +1,7 @@
 // Ergebnisseite: Anzahl und Namen pro Gericht
 (function () {
   const S = window.Survey;
-  let menu, i18n, votes = null, loadError = false, lang = S.getLang();
+  let menu, i18n, votes = null, loadError = false, needsPassword = false, lang = S.getLang();
 
   const $ = sel => document.querySelector(sel);
   const els = {
@@ -10,6 +10,10 @@
     showAll: $("#show-all"),
     refresh: $("#refresh"),
     demo: $("#demo-banner"),
+    toolbar: $(".toolbar"),
+    login: $("#login"),
+    password: $("#password"),
+    loginError: $("#login-error"),
     langBtn: $("#lang-btn"),
     themeBtn: $("#theme-btn")
   };
@@ -21,8 +25,11 @@
     document.title = tr.resultsTitle + " – " + tr.restaurant;
     els.langBtn.textContent = lang === "de" ? "RU" : "DE";
     els.langBtn.title = tr.langSwitch;
-    els.demo.hidden = S.hasBackend;
+    S.detectBackend().then(m => { els.demo.hidden = m !== "demo"; });
+    els.login.hidden = !needsPassword;
+    els.toolbar.hidden = needsPassword;
 
+    if (needsPassword) { els.out.innerHTML = ""; els.total.textContent = ""; return; }
     if (loadError) { els.out.innerHTML = '<p class="error">' + S.escapeHtml(tr.resultsError) + "</p>"; return; }
     if (!votes) { els.out.innerHTML = '<p class="muted">' + S.escapeHtml(tr.resultsLoading) + "</p>"; return; }
 
@@ -68,10 +75,21 @@
 
   async function load() {
     loadError = false;
-    try { votes = await S.fetchVotes(); }
-    catch (e) { console.error(e); loadError = true; }
+    try { votes = await S.fetchVotes(); needsPassword = false; els.loginError.hidden = true; }
+    catch (e) {
+      if (e.status === 401) {
+        if (needsPassword) els.loginError.hidden = false; // falsches Passwort
+        needsPassword = true;
+      } else { console.error(e); loadError = true; }
+    }
     render();
   }
+
+  els.login.addEventListener("submit", e => {
+    e.preventDefault();
+    S.setResultsPassword(els.password.value);
+    load();
+  });
 
   els.showAll.addEventListener("change", render);
   els.refresh.addEventListener("click", load);

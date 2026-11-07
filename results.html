@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="robots" content="noindex">
+  <title>Ergebnisse – Zum Irrbühl</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <span class="brand" data-i18n="restaurant">Zum Irrbühl</span>
+    <div class="actions">
+      <button type="button" id="theme-btn" class="icon-btn" data-i18n-aria="themeToggle" aria-label="Hell/Dunkel umschalten"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button>
+      <button type="button" id="lang-btn" class="lang-btn">RU</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p id="demo-banner" class="banner" data-i18n="demoMode" hidden></p>
+    <h1 data-i18n="resultsTitle">Ergebnisse</h1>
+    <p id="total" class="muted"></p>
+
+    <div class="toolbar">
+      <label class="check"><input type="checkbox" id="show-all"> <span data-i18n="resultsShowAll">Auch Gerichte ohne Stimmen anzeigen</span></label>
+      <button type="button" id="refresh" class="secondary" data-i18n="resultsRefresh">Aktualisieren</button>
+    </div>
+
+    <div id="results"></div>
+
+    <p class="center"><a href="index.html" data-i18n="toSurvey">Zur Umfrage</a></p>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/results.js"></script>
+</body>
+</html>

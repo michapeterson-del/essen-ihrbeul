@@ -76,7 +76,7 @@
           '<span class="dish-main"><span><span class="dish-name">' + S.escapeHtml(dishName(it)) + "</span>" +
           (it.ham ? '<span class="ham" title="' + S.escapeHtml(tr.hamNote) + '">*</span>' : "") + "</span>" +
           (dishName(it) !== it.name ? '<span class="dish-orig" lang="de">' + S.escapeHtml(it.name) + "</span>" : "") +
-          '<span class="dish-desc">' + S.escapeHtml(it.desc[lang] || it.desc.de) + "</span></span>" +
+          ((it.desc[lang] || it.desc.de) ? '<span class="dish-desc">' + S.escapeHtml(it.desc[lang] || it.desc.de) + "</span>" : "") + "</span>" +
           '<span class="dish-side"><span class="dish-price">' + S.formatPrice(it.price, lang) + "</span>" +
           CHECK + "</span>" +
           "</label></li>";

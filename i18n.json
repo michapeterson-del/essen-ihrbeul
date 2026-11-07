@@ -54,7 +54,9 @@
         "note": "Ø 26 cm, alle mit Tomatensauce und Käse",
         "info": "Pizza nach Wunsch belegbar. Beläge je 2,00 €: Zwiebeln, Ei, Spinat, Mais, milde Peperoni, Knoblauch, Oliven, Paprika, Artischocken, Ananas. Je 2,50 €: Salami, frische Champignons, Käse, Mozzarella, Peperoniwurst, Kapern, Sardellen, Brokkoli, frische Tomatenscheiben, Rucola. Je 3,00 €: Schinken, Gorgonzola, Thunfisch, Fetakäse, Fleischsauce, Shrimps, Parmaschinken, Parmesankäse."
       },
-      "pasta": { "title": "Nudeln", "note": "alle mit Parmesankäse bestreut" }
+      "pasta": { "title": "Nudeln", "note": "alle mit Parmesankäse bestreut" },
+      "meat": { "title": "Fleischgerichte", "note": "alle mit Pommes Frites – auf Wunsch Bratkartoffeln oder Kroketten" },
+      "dessert": { "title": "Dessert" }
     }
   },
   "ru": {
@@ -112,7 +114,9 @@
         "note": "Ø 26 см, все с томатным соусом и сыром",
         "info": "Пиццу можно собрать по своему вкусу. Добавки по 2,00 €: лук, яйцо, шпинат, кукуруза, мягкий перец пеперони, чеснок, оливки, сладкий перец, артишоки, ананас. По 2,50 €: салями, свежие шампиньоны, сыр, моцарелла, острая колбаса пепперони, каперсы, анчоусы, брокколи, свежие ломтики помидоров, руккола. По 3,00 €: ветчина, горгонзола, тунец, сыр фета, мясной соус, креветки, пармская ветчина, пармезан."
       },
-      "pasta": { "title": "Паста", "note": "все посыпаны пармезаном" }
+      "pasta": { "title": "Паста", "note": "все посыпаны пармезаном" },
+      "meat": { "title": "Мясные блюда", "note": "все с картофелем фри – по желанию жареный картофель или крокеты" },
+      "dessert": { "title": "Десерты" }
     }
   }
 }

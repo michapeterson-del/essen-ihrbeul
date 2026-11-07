@@ -9,7 +9,7 @@
   <meta name="robots" content="noindex">
   <title>Bestellungen – Zum Irrbühl</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-  <link rel="stylesheet" href="css/style.css?v=20261107e">
+  <link rel="stylesheet" href="css/style.css?v=20261107f">
 </head>
 <body>
   <header class="navbar">
@@ -26,18 +26,14 @@
     <h1 data-i18n="resultsTitle">Bestellungen</h1>
     <p id="total" class="subhead"></p>
 
-    <section class="section">
-      <ul class="group">
-        <li>
-          <label class="row switch-row">
-            <span data-i18n="resultsShowAll">Auch nicht bestellte Gerichte anzeigen</span>
-            <input type="checkbox" id="show-all" class="switch" role="switch">
-          </label>
-        </li>
-      </ul>
-      <div class="results-actions">
-        <button type="button" id="refresh" class="btn-secondary" data-i18n="resultsRefresh">Aktualisieren</button>
+    <section class="section results-toolbar">
+      <div class="segmented" role="group">
+        <button type="button" data-view="dish" aria-pressed="true" data-i18n="viewByDish">Nach Gericht</button>
+        <button type="button" data-view="person" aria-pressed="false" data-i18n="viewByPerson">Nach Person</button>
       </div>
+      <button type="button" id="refresh" class="nav-btn" data-i18n-aria="resultsRefresh" aria-label="Aktualisieren">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </section>
 
     <section class="section">
@@ -49,7 +45,7 @@
     </section>
   </main>
 
-  <script src="js/common.js?v=20261107e"></script>
-  <script src="js/results.js?v=20261107e"></script>
+  <script src="js/common.js?v=20261107f"></script>
+  <script src="js/results.js?v=20261107f"></script>
 </body>
 </html>

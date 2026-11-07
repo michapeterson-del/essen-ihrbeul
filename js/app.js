@@ -22,6 +22,10 @@
     thanks: $("#thanks"),
     thanksChoice: $("#thanks-choice"),
     orderAgain: $("#order-again"),
+    name: $("#voter-name"),
+    nameRow: $("#name-row"),
+    nameError: $("#name-error"),
+    thanksName: $("#thanks-name"),
     demo: $("#demo-banner"),
     langBtn: $("#lang-btn"),
   };
@@ -92,12 +96,16 @@
     els.bar.classList.toggle("has-selection", !!item);
   }
 
+  const NAME_KEY = "irrbuehl_name"; // Name merken, damit man ihn beim 2. Mal nicht neu tippen muss
+  function currentName() { return els.name.value.trim().slice(0, 40); }
+
   function showThanks(nr) {
     els.form.hidden = true;
     els.bar.hidden = true;
     els.thanks.hidden = false;
     els.searchRow.hidden = true;
     els.thanksChoice.textContent = dishLabel(findItem(nr));
+    els.thanksName.textContent = S.fmt(t().thanksFor, { name: currentName() });
     window.scrollTo(0, 0);
   }
 
@@ -148,13 +156,20 @@
     e.preventDefault();
     const item = findItem(selectedNr);
     if (!item) return;
+    if (!currentName()) {
+      els.nameError.hidden = false;
+      els.nameRow.classList.add("invalid");
+      els.name.scrollIntoView({ block: "center" });
+      els.name.focus();
+      return;
+    }
     if (!window.confirm(S.fmt(t().confirm, { dish: dishLabel(item) }))) return;
 
     els.error.hidden = true;
     els.submit.disabled = true;
     els.submit.textContent = t().submitting;
     try {
-      await S.submitVote({ dish_nr: item.nr, dish_name: item.name, lang });
+      await S.submitVote({ dish_nr: item.nr, dish_name: item.name, voter_name: currentName(), lang });
       ordered = item.nr;
       showThanks(ordered);
     } catch (err) {
@@ -168,6 +183,12 @@
   });
 
   els.orderAgain.addEventListener("click", showMenu);
+
+  els.name.value = S.store.get(NAME_KEY) || "";
+  els.name.addEventListener("input", () => {
+    S.store.set(NAME_KEY, els.name.value);
+    if (currentName()) { els.nameError.hidden = true; els.nameRow.classList.remove("invalid"); }
+  });
 
   // ---------- Start ----------
   Promise.all([S.loadJSON("menu.json"), S.loadJSON("i18n.json")])

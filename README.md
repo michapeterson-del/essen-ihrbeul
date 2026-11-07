@@ -1,6 +1,6 @@
 # Bestellung „Zum Irrbühl“ – Was möchtest du essen?
 
-Einmalige Sammelbestellung: Man wählt ein Gericht, bestellt (ohne Namen) und sieht eine Danke-Seite; mit „Noch etwas bestellen“ geht es zurück zur Karte. Mehrfach bestellen ist erlaubt.
+Einmalige Sammelbestellung: Man wählt ein Gericht, trägt seinen Namen ein (Pflicht), bestellt und sieht eine Danke-Seite; mit „Noch etwas bestellen“ geht es zurück zur Karte. Mehrfach bestellen ist erlaubt.
 Alle Bestellungen stehen unter **`/results`**, ohne Passwort.
 
 - Deutsch / Русский (Button oben rechts)
@@ -25,7 +25,7 @@ Danach kann die App in Coolify einfach gelöscht werden.
 | Datei | Inhalt |
 |---|---|
 | `index.html` | Bestellseite |
-| `results.html` | Alle Bestellungen (Anzahl pro Gericht, einzeln löschbar) |
+| `results.html` | Übersicht „Nach Gericht“ und „Nach Person“, einzeln löschbar |
 | `menu.json` | Speisekarte: Nummer, Name, Preis, `ham: true` für `*`, Beschreibung DE/RU |
 | `i18n.json` | Alle Texte der Oberfläche und Kategorien in DE/RU |
 | `server.js` | Kleiner Server ohne Abhängigkeiten; speichert Bestellungen in `/data/votes.json` |

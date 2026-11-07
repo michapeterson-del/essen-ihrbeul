@@ -1,25 +1,87 @@
-// Ergebnisseite: Anzahl und Namen pro Gericht
+// Bestellübersicht: Ansicht „Nach Gericht“ (zum Bestellen beim Restaurant)
+// und „Nach Person“ (wer hat was, mit Löschen-Knöpfen).
 (function () {
   const S = window.Survey;
+  const VIEW_KEY = "irrbuehl_results_view";
   let menu, i18n, votes = null, loadError = false, lang = S.getLang();
+  let view = S.store.get(VIEW_KEY) === "person" ? "person" : "dish";
 
   const $ = sel => document.querySelector(sel);
   const els = {
     out: $("#results"),
     total: $("#total"),
-    showAll: $("#show-all"),
     refresh: $("#refresh"),
     demo: $("#demo-banner"),
     langBtn: $("#lang-btn"),
     deleteAll: $("#delete-all"),
+    segments: document.querySelectorAll(".segmented button")
   };
   const TRASH = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  function t() { return i18n[lang]; }
+  const esc = s => S.escapeHtml(s);
 
   function timeOf(iso) {
     try { return new Date(iso).toLocaleTimeString(lang === "ru" ? "ru-RU" : "de-DE", { hour: "2-digit", minute: "2-digit" }); }
     catch (e) { return ""; }
   }
-  function t() { return i18n[lang]; }
+
+  const itemsByNr = () => new Map(menu.categories.flatMap(c => c.items).map(i => [i.nr, i]));
+  function dishOf(v, items) {
+    const it = items.get(v.dish_nr) || { nr: v.dish_nr, name: v.dish_name };
+    return { it, name: (lang === "ru" && it.name_ru ? it.name_ru : it.name) + (it.ham ? "*" : "") };
+  }
+  function personOf(v) { return (v.voter_name || "").trim() || t().resultsAnonymous; }
+
+  // „Anna, Micha 2×“ – gleiche Namen zusammenfassen
+  function namesSummary(list) {
+    const counts = new Map();
+    for (const v of list) { const p = personOf(v); counts.set(p, (counts.get(p) || 0) + 1); }
+    return [...counts].sort((a, b) => a[0].localeCompare(b[0], lang))
+      .map(([p, n]) => esc(p) + (n > 1 ? ' <span class="times">' + n + "×</span>" : "")).join(", ");
+  }
+
+  function renderByDish(items) {
+    const groups = new Map();
+    for (const v of votes) {
+      if (!groups.has(v.dish_nr)) groups.set(v.dish_nr, []);
+      groups.get(v.dish_nr).push(v);
+    }
+    const rows = [...groups].map(([nr, list]) => ({ d: dishOf(list[0], items), list }))
+      .sort((a, b) => b.list.length - a.list.length || a.d.it.nr - b.d.it.nr);
+    return '<ul class="group summary-list">' + rows.map(({ d, list }) =>
+      '<li class="row summary">' +
+        '<span class="result-nr">' + d.it.nr + "</span>" +
+        '<span class="summary-main"><span class="result-name">' + esc(d.name) + "</span>" +
+        '<span class="summary-names">' + namesSummary(list) + "</span></span>" +
+        '<span class="result-count" aria-label="' + list.length + '">' + list.length + "×</span>" +
+      "</li>").join("") + "</ul>";
+  }
+
+  function renderByPerson(items) {
+    const tr = t();
+    const people = new Map();
+    for (const v of votes) {
+      const p = personOf(v);
+      if (!people.has(p)) people.set(p, []);
+      people.get(p).push(v);
+    }
+    return [...people].sort((a, b) => a[0].localeCompare(b[0], lang)).map(([p, list]) =>
+      '<section class="person">' +
+        '<h2 class="section-header person-header"><span>' + esc(p) + '</span><span class="person-count">' +
+          esc(S.fmt(list.length === 1 ? tr.resultsOneOrder : tr.resultsOrders, { n: list.length })) + "</span></h2>" +
+        '<ul class="group">' + list.map(v => {
+          const d = dishOf(v, items), time = timeOf(v.created_at);
+          return '<li class="row person-order">' +
+            '<span class="result-nr">' + d.it.nr + "</span>" +
+            '<span class="summary-main"><span class="result-name">' + esc(d.name) + "</span>" +
+            '<span class="order-time">' + esc(time) + "</span></span>" +
+            '<button type="button" class="btn-delete" data-id="' + esc(v.id) + '" data-who="' + esc(p) +
+            '" data-dish="' + esc(d.name) + '" aria-label="' + esc(tr.resultsDelete) + '" title="' + esc(tr.resultsDelete) + '">' +
+            TRASH + "</button></li>";
+        }).join("") + "</ul>" +
+      "</section>").join("");
+  }
 
   function render() {
     const tr = t();
@@ -28,54 +90,18 @@
     els.langBtn.textContent = lang === "de" ? "RU" : "DE";
     els.langBtn.title = tr.langSwitch;
     S.detectBackend().then(m => { els.demo.hidden = m !== "demo"; });
+    els.segments.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.view === view)));
 
     els.deleteAll.hidden = !(votes && votes.length);
-    if (loadError) { els.out.innerHTML = '<p class="error">' + S.escapeHtml(tr.resultsError) + "</p>"; return; }
-    if (!votes) { els.out.innerHTML = '<p class="subhead">' + S.escapeHtml(tr.resultsLoading) + "</p>"; return; }
+    if (loadError) { els.out.innerHTML = '<p class="error">' + esc(tr.resultsError) + "</p>"; return; }
+    if (!votes) { els.out.innerHTML = '<p class="subhead">' + esc(tr.resultsLoading) + "</p>"; return; }
 
-    els.total.textContent = S.fmt(tr.resultsTotal, { n: votes.length });
+    const persons = new Set(votes.map(personOf)).size;
+    els.total.textContent = S.fmt(tr.resultsTotal, { n: votes.length, p: persons });
+    if (!votes.length) { els.out.innerHTML = '<p class="subhead">' + esc(tr.resultsEmpty) + "</p>"; return; }
 
-    const byNr = new Map();
-    for (const v of votes) {
-      if (!byNr.has(v.dish_nr)) byNr.set(v.dish_nr, []);
-      byNr.get(v.dish_nr).push(v);
-    }
-    const max = Math.max(1, ...[...byNr.values()].map(a => a.length));
-
-    let rows = menu.categories.flatMap(c => c.items).map(it => ({ it, names: byNr.get(it.nr) || [] }));
-    // Stimmen für Gerichte, die nicht (mehr) in der Karte stehen
-    for (const [nr, names] of byNr) {
-      if (!rows.some(r => r.it.nr === nr)) {
-        const v = votes.find(x => x.dish_nr === nr);
-        rows.push({ it: { nr, name: v.dish_name, price: null }, names });
-      }
-    }
-    if (!els.showAll.checked) rows = rows.filter(r => r.names.length);
-    rows.sort((a, b) => b.names.length - a.names.length || a.it.nr - b.it.nr);
-
-    if (!votes.length && !els.showAll.checked) {
-      els.out.innerHTML = '<p class="subhead">' + S.escapeHtml(tr.resultsEmpty) + "</p>";
-      return;
-    }
-
-    els.out.innerHTML = '<ol class="group results-list">' + rows.map(({ it, names }) => {
-      const dish = lang === "ru" && it.name_ru ? it.name_ru : it.name;
-      const orders = names.map(v => {
-        const time = timeOf(v.created_at);
-        return '<li class="order"><span class="order-who">' + S.escapeHtml(tr.resultsOrder) +
-          ' <span class="order-time">' + S.escapeHtml(time) + "</span></span>" +
-          '<button type="button" class="btn-delete" data-id="' + S.escapeHtml(v.id) + '" data-time="' +
-          S.escapeHtml(time) + '" data-dish="' + S.escapeHtml(dish) + '" aria-label="' +
-          S.escapeHtml(tr.resultsDelete) + '" title="' + S.escapeHtml(tr.resultsDelete) + '">' + TRASH + "</button></li>";
-      }).join("");
-      return '<li class="row result' + (names.length ? "" : " zero") + '">' +
-        '<span class="result-nr">' + it.nr + "</span>" +
-        '<span class="result-name">' + S.escapeHtml(lang === "ru" && it.name_ru ? it.name_ru : it.name) + (it.ham ? "*" : "") + "</span>" +
-        '<span class="result-count">' + names.length + "</span>" +
-        '<span class="result-bar" aria-hidden="true"><span style="width:' + (names.length / max * 100) + '%"></span></span>' +
-        (orders ? '<ul class="order-list">' + orders + "</ul>" : "") +
-        "</li>";
-    }).join("") + "</ol>";
+    const items = itemsByNr();
+    els.out.innerHTML = view === "person" ? renderByPerson(items) : renderByDish(items);
   }
 
   async function load() {
@@ -85,12 +111,16 @@
     render();
   }
 
+  els.segments.forEach(b => b.addEventListener("click", () => {
+    view = b.dataset.view;
+    S.store.set(VIEW_KEY, view);
+    render();
+  }));
 
   els.out.addEventListener("click", async e => {
     const btn = e.target.closest(".btn-delete");
     if (!btn) return;
-    const msg = S.fmt(t().resultsDeleteConfirm, { time: btn.dataset.time, dish: btn.dataset.dish });
-    if (!window.confirm(msg)) return;
+    if (!window.confirm(S.fmt(t().resultsDeleteConfirm, { name: btn.dataset.who, dish: btn.dataset.dish }))) return;
     btn.disabled = true;
     try { await S.deleteVotes(btn.dataset.id); } catch (err) { console.error(err); window.alert(t().resultsDeleteError); }
     load();
@@ -103,7 +133,6 @@
     load();
   });
 
-  els.showAll.addEventListener("change", render);
   els.refresh.addEventListener("click", load);
   els.langBtn.addEventListener("click", () => { lang = lang === "de" ? "ru" : "de"; S.setLang(lang); render(); });
 

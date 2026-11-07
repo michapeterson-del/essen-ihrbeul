@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <title>Bestellung – Zum Irrbühl</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍝</text></svg>">
-  <link rel="stylesheet" href="css/style.css?v=20261107e">
+  <link rel="stylesheet" href="css/style.css?v=20261107f">
 </head>
 <body class="loading">
   <header class="navbar">
@@ -34,9 +34,16 @@
 
     <form id="survey" novalidate>
       <h1 data-i18n="question">Was möchtest du essen?</h1>
-      <p class="subhead" data-i18n="intro">Wähle ein Gericht aus und tippe auf „Bestellen“.</p>
+      <p class="subhead" data-i18n="intro">Name eintragen, Gericht auswählen und auf „Bestellen“ tippen.</p>
 
       <section class="section">
+        <ul class="group">
+          <li class="row field-row" id="name-row">
+            <label for="voter-name" data-i18n="nameLabel">Dein Name</label>
+            <input id="voter-name" type="text" maxlength="40" autocomplete="given-name" required aria-required="true" data-i18n-placeholder="namePlaceholder">
+          </li>
+        </ul>
+        <p id="name-error" class="error" role="alert" data-i18n="nameRequired" hidden>Bitte gib deinen Namen ein.</p>
         <p class="footnote" data-i18n="hamNote">* = mit Vorderschinken</p>
       </section>
 
@@ -63,6 +70,7 @@
         <li class="row thanks-choice">
           <small data-i18n="thanksChoice">Du hast bestellt:</small>
           <strong id="thanks-choice"></strong>
+          <small id="thanks-name"></small>
         </li>
       </ul>
       <p class="subhead section" data-i18n="guten">Guten Appetit!</p>
@@ -70,7 +78,7 @@
     </section>
   </main>
 
-  <script src="js/common.js?v=20261107e"></script>
-  <script src="js/app.js?v=20261107e"></script>
+  <script src="js/common.js?v=20261107f"></script>
+  <script src="js/app.js?v=20261107f"></script>
 </body>
 </html>

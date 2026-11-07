@@ -250,6 +250,20 @@ h1 {
 }
 
 
+/* Formularzeile (Name, Pflicht) */
+.field-row { flex-wrap: wrap; }
+.field-row label { flex: 0 0 auto; font-weight: 600; }
+.field-row input {
+  flex: 1 1 8rem; min-width: 0; min-height: var(--tap-default);
+  margin: calc(-1 * var(--space-3)) 0;
+  border: 0; background: transparent; color: var(--color-label);
+  font: var(--text-body); text-align: right;
+}
+.field-row input::placeholder { color: var(--color-label-2); opacity: 1; }
+.field-row input:focus-visible { outline: none; }
+.field-row:focus-within { box-shadow: inset 0 0 0 2px var(--color-accent); border-radius: var(--radius-group); }
+.field-row.invalid { box-shadow: inset 0 0 0 2px var(--color-danger); border-radius: var(--radius-group); }
+
 /* ========================= Gerichte ========================= */
 .dish-list { --row-inset: calc(var(--space-4) + var(--nr-col) + var(--space-3)); }
 .dish-list input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
@@ -330,54 +344,46 @@ h1 {
 .thanks-choice { flex-direction: column; align-items: flex-start; gap: 0.125rem; }
 .thanks-choice small { font: var(--text-footnote); color: var(--color-label-2); }
 .thanks-choice strong { font: var(--text-headline); }
+.thanks-choice small:last-child { font: var(--text-subhead); color: var(--color-label-2); }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 
-/* ========================= Ergebnisse ========================= */
-.switch-row { justify-content: space-between; cursor: pointer; }
-.switch {
-  position: relative; flex: 0 0 auto;
-  width: 51px; height: 31px;  /* TODO: prüfen – iOS-Switch-Maße nicht HIG-belegt */
-  -webkit-appearance: none; appearance: none; margin: 0;
-  border-radius: var(--radius-capsule); background: var(--color-fill);
-  border: 1px solid var(--color-separator); cursor: pointer;
-}
-.switch::after {
-  content: ""; position: absolute; top: 2px; left: 2px;
-  width: 25px; height: 25px; border-radius: 50%;
-  background: var(--color-knob); box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
-  transition: transform var(--dur-ease) var(--ease-default);
-}
-.switch:checked { background: var(--color-success); border-color: var(--color-success); }
-.switch:checked::after { transform: translateX(20px); }
+/* ========================= Bestellübersicht ========================= */
+.results-toolbar { display: flex; align-items: center; gap: var(--space-pad-bezel); }
 
-.results-actions { display: flex; justify-content: flex-end; margin-top: var(--space-pad-bezel); }
+/* Segmented Control (iOS-Stil) */
+.segmented {
+  flex: 1; display: flex; padding: 2px; gap: 2px;
+  background: var(--color-fill); border-radius: var(--radius-field);
+}
+.segmented button {
+  flex: 1; min-height: calc(var(--tap-default) - 4px);
+  border: 0; border-radius: calc(var(--radius-field) - 2px); /* konzentrisch: außen − Padding */
+  background: transparent; color: var(--color-label);
+  font: var(--text-subhead); font-weight: 600; letter-spacing: var(--tracking-subhead);
+}
+.segmented button[aria-pressed="true"] { background: var(--color-surface); box-shadow: 0 1px 3px rgb(0 0 0 / 0.15); }
+.segmented button:active { opacity: 0.7; }
 
-.results-list { --row-inset: calc(var(--space-4) + var(--nr-col) + var(--space-3)); }
-.result { flex-wrap: wrap; row-gap: var(--space-2); }
-.result.zero .result-name, .result.zero .result-count { color: var(--color-label-2); }
+.summary-list, .person .group { --row-inset: calc(var(--space-4) + var(--nr-col) + var(--space-3)); }
 .result-nr {
   flex: 0 0 var(--nr-col); text-align: right;
   font: var(--text-subhead); font-variant-numeric: tabular-nums; color: var(--color-label-2);
+  padding-top: 0.0625rem;
 }
-.result-name { flex: 1 1 8rem; min-width: 0; font: var(--text-headline); }
-.result-count { font: var(--text-title-3); font-variant-numeric: tabular-nums; }
-.result-bar, .order-list { flex: 1 0 calc(100% - var(--nr-col) - var(--space-3)); margin-left: calc(var(--nr-col) + var(--space-3)); }
-.result-bar {
-  height: 0.375rem; border-radius: var(--radius-capsule);
-  background: var(--color-fill); overflow: hidden;
-}
-.result-bar span { display: block; height: 100%; background: var(--color-label-2); border-radius: inherit; } /* neutral: Akzent bleibt „interaktiv“ */
+.result-name { font: var(--text-headline); letter-spacing: var(--tracking-body); }
+.result-count { font: var(--text-title-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.summary { align-items: flex-start; }
+.summary-main { flex: 1 1 8rem; min-width: 0; display: flex; flex-direction: column; gap: 0.125rem; }
+.summary-names { font: var(--text-subhead); letter-spacing: var(--tracking-subhead); color: var(--color-label-2); overflow-wrap: anywhere; }
+.times { font-weight: 600; color: var(--color-label); }
+.order-time { font: var(--text-footnote); letter-spacing: var(--tracking-footnote); color: var(--color-label-2); }
 
-/* Einzelne Bestellungen mit Löschen-Knopf */
-.order-list { list-style: none; padding: 0; margin-top: 0; margin-bottom: calc(-1 * var(--space-2)); }
-.order {
-  display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
-  min-height: var(--tap-default);
-  border-top: 1px solid var(--color-separator);
-}
-.order-who { font: var(--text-body); letter-spacing: var(--tracking-body); min-width: 0; overflow-wrap: anywhere; }
-.order-time { color: var(--color-label-2); }
-.order-time { font: var(--text-footnote); letter-spacing: var(--tracking-footnote); margin-left: var(--space-1); }
+.person { margin-top: var(--space-6); }
+.person:first-child { margin-top: 0; }
+.person-header { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); flex-wrap: wrap; }
+.person-count { font: var(--text-footnote); letter-spacing: var(--tracking-footnote); color: var(--color-label-2); }
+.person-order .btn-delete { margin-right: calc(-1 * var(--space-3)); }
+
 .btn-delete {
   flex: 0 0 auto; width: var(--tap-default); height: var(--tap-default);
   margin-right: calc(-1 * var(--space-3));
@@ -401,5 +407,4 @@ h1 {
 /* ========================= Reduce Motion ========================= */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
-  .switch::after { transition: none; }   /* keine Bewegung, nur Zustandswechsel */
 }

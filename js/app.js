@@ -23,7 +23,6 @@
     already: $("#already"),
     demo: $("#demo-banner"),
     langBtn: $("#lang-btn"),
-    themeBtn: $("#theme-btn")
   };
 
   function t() { return i18n[lang]; }
@@ -137,7 +136,6 @@
     S.setLang(lang);
     renderAll();
   });
-  els.themeBtn.addEventListener("click", S.toggleTheme);
 
   els.form.addEventListener("submit", async e => {
     e.preventDefault();

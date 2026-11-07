@@ -37,20 +37,9 @@
     }[c]));
   }
 
-  // Theme: "light" | "dark" | null (= System)
-  function applyTheme() {
-    const t = store.get(THEME_KEY);
-    if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
-    else delete document.documentElement.dataset.theme;
-  }
-  function toggleTheme() {
-    const isDark = document.documentElement.dataset.theme
-      ? document.documentElement.dataset.theme === "dark"
-      : window.matchMedia("(prefers-color-scheme: dark)").matches;
-    store.set(THEME_KEY, isDark ? "light" : "dark");
-    applyTheme();
-  }
-  applyTheme();
+  // Hell/Dunkel folgt immer der Systemeinstellung (CSS prefers-color-scheme).
+  // Alte manuelle Auswahl aus früherer Version entfernen.
+  try { localStorage.removeItem(THEME_KEY); } catch (e) { /* ignore */ }
 
   // Übersetzt alle Elemente mit data-i18n / data-i18n-placeholder / data-i18n-aria.
   function translateDom(t) {
@@ -106,6 +95,6 @@
 
   window.Survey = {
     store, loadJSON, getLang, setLang, fmt, formatPrice, escapeHtml,
-    toggleTheme, translateDom, detectBackend, submitVote, fetchVotes
+    translateDom, detectBackend, submitVote, fetchVotes
   };
 })();

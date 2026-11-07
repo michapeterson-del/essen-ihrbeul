@@ -70,9 +70,9 @@
   --color-glass:     rgb(249 249 249 / 0.82); /* TODO: prüfen */
 }
 
-/* ---------- Dark (System oder per Button) ---------- */
+/* ---------- Dark (folgt der Systemeinstellung) ---------- */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
+  :root {
     --color-bg:        rgb(0 0 0);          /* TODO: prüfen */
     --color-surface:   rgb(28 28 30);       /* systemGray6 dark */
     --color-label:     rgb(255 255 255);    /* TODO: prüfen */
@@ -85,19 +85,6 @@
     --color-danger:    rgb(255 66 69);
     --color-glass:     rgb(22 22 24 / 0.82);
   }
-}
-:root[data-theme="dark"] {
-  --color-bg:        rgb(0 0 0);
-  --color-surface:   rgb(28 28 30);
-  --color-label:     rgb(255 255 255);
-  --color-label-2:   rgb(174 174 178);
-  --color-separator: rgb(72 72 74);
-  --color-fill:      rgb(44 44 46);
-  --color-accent:    rgb(0 145 255);
-  --color-on-accent: rgb(255 255 255);
-  --color-success:   rgb(48 209 88);
-  --color-danger:    rgb(255 66 69);
-  --color-glass:     rgb(22 22 24 / 0.82);
 }
 
 /* ---------- Increased Contrast ---------- */
@@ -112,23 +99,11 @@
   }
 }
 @media (prefers-contrast: more) and (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
+  :root {
     --color-label-2:   rgb(199 199 204);
     --color-separator: rgb(124 124 128);    /* systemGray2 IC dark */
     --color-fill:      rgb(54 54 56);       /* systemGray5 IC dark */
     --color-accent:    rgb(92 184 255);     /* Blue IC dark: 7.9:1 */
-    --color-on-accent: rgb(0 0 0);
-    --color-success:   rgb(74 217 104);
-    --color-danger:    rgb(255 97 101);
-    --color-glass:     rgb(22 22 24 / 0.97);
-  }
-}
-@media (prefers-contrast: more) {
-  :root[data-theme="dark"] {
-    --color-label-2:   rgb(199 199 204);
-    --color-separator: rgb(124 124 128);
-    --color-fill:      rgb(54 54 56);
-    --color-accent:    rgb(92 184 255);
     --color-on-accent: rgb(0 0 0);
     --color-success:   rgb(74 217 104);
     --color-danger:    rgb(255 97 101);

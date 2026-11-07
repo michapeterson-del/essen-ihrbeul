@@ -11,7 +11,6 @@
     refresh: $("#refresh"),
     demo: $("#demo-banner"),
     langBtn: $("#lang-btn"),
-    themeBtn: $("#theme-btn")
   };
   function t() { return i18n[lang]; }
 
@@ -77,7 +76,6 @@
   els.showAll.addEventListener("change", render);
   els.refresh.addEventListener("click", load);
   els.langBtn.addEventListener("click", () => { lang = lang === "de" ? "ru" : "de"; S.setLang(lang); render(); });
-  els.themeBtn.addEventListener("click", S.toggleTheme);
 
   Promise.all([S.loadJSON("menu.json"), S.loadJSON("i18n.json")])
     .then(([m, i]) => { menu = m; i18n = i; render(); load(); })

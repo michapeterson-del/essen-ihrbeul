@@ -35,7 +35,6 @@
     "resultsError": "Ergebnisse konnten nicht geladen werden.",
     "demoMode": "Demo-Modus: Kein Server gefunden. Stimmen werden nur in diesem Browser gespeichert.",
     "langSwitch": "Русский",
-    "themeToggle": "Hell/Dunkel umschalten",
     "categories": {
       "starters": { "title": "Vorspeisen" },
       "soups": { "title": "Suppen" },
@@ -85,7 +84,6 @@
     "resultsError": "Не удалось загрузить результаты.",
     "demoMode": "Демо-режим: сервер не найден. Голоса сохраняются только в этом браузере.",
     "langSwitch": "Deutsch",
-    "themeToggle": "Переключить светлую/тёмную тему",
     "categories": {
       "starters": { "title": "Закуски" },
       "soups": { "title": "Супы" },

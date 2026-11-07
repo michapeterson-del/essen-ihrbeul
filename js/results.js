@@ -24,7 +24,7 @@
     S.detectBackend().then(m => { els.demo.hidden = m !== "demo"; });
 
     if (loadError) { els.out.innerHTML = '<p class="error">' + S.escapeHtml(tr.resultsError) + "</p>"; return; }
-    if (!votes) { els.out.innerHTML = '<p class="muted">' + S.escapeHtml(tr.resultsLoading) + "</p>"; return; }
+    if (!votes) { els.out.innerHTML = '<p class="subhead">' + S.escapeHtml(tr.resultsLoading) + "</p>"; return; }
 
     els.total.textContent = S.fmt(tr.resultsTotal, { n: votes.length });
 
@@ -47,21 +47,21 @@
     rows.sort((a, b) => b.names.length - a.names.length || a.it.nr - b.it.nr);
 
     if (!votes.length && !els.showAll.checked) {
-      els.out.innerHTML = '<p class="muted">' + S.escapeHtml(tr.resultsEmpty) + "</p>";
+      els.out.innerHTML = '<p class="subhead">' + S.escapeHtml(tr.resultsEmpty) + "</p>";
       return;
     }
 
-    els.out.innerHTML = '<ol class="result-list">' + rows.map(({ it, names }) => {
+    els.out.innerHTML = '<ol class="group results-list">' + rows.map(({ it, names }) => {
       const named = names.filter(Boolean);
       const anon = names.length - named.length;
       const people = named.map(S.escapeHtml);
-      if (anon) people.push('<span class="muted">' + anon + " × " + S.escapeHtml(tr.resultsAnonymous) + "</span>");
-      return '<li class="result' + (names.length ? "" : " zero") + '">' +
-        '<div class="result-head"><span class="nr">' + it.nr + '</span>' +
-        '<span class="name">' + S.escapeHtml(it.name) + (it.ham ? "*" : "") + "</span>" +
-        '<span class="count">' + names.length + "</span></div>" +
-        '<div class="bar"><span style="width:' + (names.length / max * 100) + '%"></span></div>' +
-        (people.length ? '<p class="people">' + people.join(", ") + "</p>" : "") +
+      if (anon) people.push(anon + " × " + S.escapeHtml(tr.resultsAnonymous));
+      return '<li class="row result' + (names.length ? "" : " zero") + '">' +
+        '<span class="result-nr">' + it.nr + "</span>" +
+        '<span class="result-name">' + S.escapeHtml(it.name) + (it.ham ? "*" : "") + "</span>" +
+        '<span class="result-count">' + names.length + "</span>" +
+        '<span class="result-bar" aria-hidden="true"><span style="width:' + (names.length / max * 100) + '%"></span></span>' +
+        (people.length ? '<p class="result-people">' + people.join(", ") + "</p>" : "") +
         "</li>";
     }).join("") + "</ol>";
   }

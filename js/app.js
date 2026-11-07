@@ -11,6 +11,7 @@
     list: $("#menu"),
     search: $("#search"),
     clear: $("#search-clear"),
+    searchRow: $("#search-row"),
     empty: $("#no-results"),
     name: $("#voter-name"),
     bar: $("#vote-bar"),
@@ -48,6 +49,8 @@
     return q.split(/\s+/).every(w => hay.includes(w));
   }
 
+  const CHECK = '<svg class="check" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
   function renderMenu() {
     const tr = t();
     let html = "", visible = 0;
@@ -56,24 +59,25 @@
       if (!items.length) continue;
       visible += items.length;
       const ct = tr.categories[cat.id] || { title: cat.id };
-      html += '<section class="category"><h2>' + S.escapeHtml(ct.title) + "</h2>";
-      if (ct.note) html += '<p class="cat-note">' + S.escapeHtml(ct.note) + "</p>";
-      html += '<ul class="dishes">';
+      html += '<section class="section"><h2 class="section-header">' + S.escapeHtml(ct.title) + "</h2>";
+      if (ct.note) html += '<p class="section-note">' + S.escapeHtml(ct.note) + "</p>";
+      html += '<ul class="group dish-list">';
       for (const it of items) {
         const id = "dish-" + it.nr;
         html +=
           '<li><input type="radio" name="dish" id="' + id + '" value="' + it.nr + '"' +
           (selectedNr === it.nr ? " checked" : "") + ">" +
-          '<label for="' + id + '" class="dish">' +
-          '<span class="nr">' + it.nr + "</span>" +
-          '<span class="body"><span class="top"><span class="name">' + S.escapeHtml(it.name) +
-          (it.ham ? '<sup class="ham" title="' + S.escapeHtml(tr.hamNote) + '">*</sup>' : "") +
-          '</span><span class="price">' + S.formatPrice(it.price, lang) + "</span></span>" +
-          '<span class="desc">' + S.escapeHtml(it.desc[lang] || it.desc.de) + "</span></span>" +
+          '<label for="' + id + '" class="row dish">' +
+          '<span class="dish-nr">' + it.nr + "</span>" +
+          '<span class="dish-main"><span><span class="dish-name">' + S.escapeHtml(it.name) + "</span>" +
+          (it.ham ? '<span class="ham" title="' + S.escapeHtml(tr.hamNote) + '">*</span>' : "") + "</span>" +
+          '<span class="dish-desc">' + S.escapeHtml(it.desc[lang] || it.desc.de) + "</span></span>" +
+          '<span class="dish-side"><span class="dish-price">' + S.formatPrice(it.price, lang) + "</span>" +
+          CHECK + "</span>" +
           "</label></li>";
       }
       html += "</ul>";
-      if (ct.info && !query) html += '<p class="cat-info">' + S.escapeHtml(ct.info) + "</p>";
+      if (ct.info && !query) html += '<p class="section-footer">' + S.escapeHtml(ct.info) + "</p>";
       html += "</section>";
     }
     els.list.innerHTML = html;
@@ -91,6 +95,7 @@
     els.form.hidden = true;
     els.bar.hidden = true;
     els.thanks.hidden = false;
+    els.searchRow.hidden = true;
     els.already.hidden = justNow;
     const item = findItem(voted.nr);
     els.thanksChoice.textContent = item ? dishLabel(item) : voted.name;

@@ -4,33 +4,48 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <meta name="robots" content="noindex">
   <title>Ergebnisse – Zum Irrbühl</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header class="topbar">
-    <span class="brand" data-i18n="restaurant">Zum Irrbühl</span>
-    <div class="actions">
-      <button type="button" id="theme-btn" class="icon-btn" data-i18n-aria="themeToggle" aria-label="Hell/Dunkel umschalten"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button>
-      <button type="button" id="lang-btn" class="lang-btn">RU</button>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <span class="brand" data-i18n="restaurant">Zum Irrbühl</span>
+      <div class="nav-actions">
+        <button type="button" id="theme-btn" class="nav-btn" data-i18n-aria="themeToggle" aria-label="Hell/Dunkel umschalten">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>
+        </button>
+        <button type="button" id="lang-btn" class="nav-btn">RU</button>
+      </div>
     </div>
   </header>
 
   <main class="wrap">
-    <p id="demo-banner" class="banner" data-i18n="demoMode" hidden></p>
+    <p id="demo-banner" class="notice" data-i18n="demoMode" hidden></p>
     <h1 data-i18n="resultsTitle">Ergebnisse</h1>
-    <p id="total" class="muted"></p>
+    <p id="total" class="subhead"></p>
 
-    <div class="toolbar">
-      <label class="check"><input type="checkbox" id="show-all"> <span data-i18n="resultsShowAll">Auch Gerichte ohne Stimmen anzeigen</span></label>
-      <button type="button" id="refresh" class="secondary" data-i18n="resultsRefresh">Aktualisieren</button>
-    </div>
+    <section class="section">
+      <ul class="group">
+        <li>
+          <label class="row switch-row">
+            <span data-i18n="resultsShowAll">Auch Gerichte ohne Stimmen anzeigen</span>
+            <input type="checkbox" id="show-all" class="switch" role="switch">
+          </label>
+        </li>
+      </ul>
+      <div class="results-actions">
+        <button type="button" id="refresh" class="btn-secondary" data-i18n="resultsRefresh">Aktualisieren</button>
+      </div>
+    </section>
 
-    <div id="results"></div>
-
-    <p class="center"><a href="index.html" data-i18n="toSurvey">Zur Umfrage</a></p>
+    <section class="section">
+      <div id="results"></div>
+    </section>
   </main>
 
   <script src="js/common.js"></script>

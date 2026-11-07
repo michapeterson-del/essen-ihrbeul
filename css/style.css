@@ -303,6 +303,7 @@ h1 {
 }
 .dish-main { flex: 1 1 7rem; overflow-wrap: break-word; hyphens: auto; min-width: 0; display: flex; flex-direction: column; gap: 0.125rem; }
 .dish-name { font: var(--text-headline); letter-spacing: var(--tracking-body); }
+.dish-orig { font: var(--text-footnote); letter-spacing: var(--tracking-footnote); color: var(--color-label-2); }
 .ham { font: var(--text-headline); margin-left: 0.125rem; }
 .dish-desc { font: var(--text-subhead); letter-spacing: var(--tracking-subhead); color: var(--color-label-2); }
 .dish-side { flex: 0 0 auto; margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-1); }

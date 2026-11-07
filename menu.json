@@ -4,91 +4,91 @@
     {
       "id": "starters",
       "items": [
-        { "nr": 1, "name": "Weinbergschnecken", "price": 12.50, "desc": { "de": "1/2 Dtzd., in hausgemachter Kräutersauce mit Toast", "ru": "1/2 дюжины, в домашнем травяном соусе с тостом" } },
-        { "nr": 2, "name": "Carpaccio", "price": 18.50, "desc": { "de": "rohes Rinderfilet in dünnen Scheiben mit Champignons, Stangensellerie, Parmesankäse und Butter, mit italienischem Dressing und Brötchen", "ru": "сырое говяжье филе тонкими ломтиками с шампиньонами, стеблевым сельдереем, пармезаном и сливочным маслом, с итальянской заправкой и булочкой" } },
-        { "nr": 3, "name": "Gebackener Fetakäse", "price": 13.50, "desc": { "de": "auf Salat mit italienischem Dressing und Brötchen", "ru": "на салате с итальянской заправкой и булочкой" } },
-        { "nr": 4, "name": "Insalata Frutti di Mare klein", "price": 16.50, "desc": { "de": "mit frischen Meeresfrüchten und Brötchen", "ru": "со свежими морепродуктами и булочкой (маленькая порция)" } },
-        { "nr": 5, "name": "Insalata Frutti di Mare groß", "price": 19.50, "desc": { "de": "mit frischen Meeresfrüchten und Brötchen", "ru": "со свежими морепродуктами и булочкой (большая порция)" } }
+        { "nr": 1, "name": "Weinbergschnecken", "name_ru": "Виноградные улитки", "price": 12.50, "desc": { "de": "1/2 Dtzd., in hausgemachter Kräutersauce mit Toast", "ru": "1/2 дюжины, в домашнем травяном соусе с тостом" } },
+        { "nr": 2, "name": "Carpaccio", "name_ru": "Карпаччо", "price": 18.50, "desc": { "de": "rohes Rinderfilet in dünnen Scheiben mit Champignons, Stangensellerie, Parmesankäse und Butter, mit italienischem Dressing und Brötchen", "ru": "сырое говяжье филе тонкими ломтиками с шампиньонами, стеблевым сельдереем, пармезаном и сливочным маслом, с итальянской заправкой и булочкой" } },
+        { "nr": 3, "name": "Gebackener Fetakäse", "name_ru": "Запечённый сыр фета", "price": 13.50, "desc": { "de": "auf Salat mit italienischem Dressing und Brötchen", "ru": "на салате с итальянской заправкой и булочкой" } },
+        { "nr": 4, "name": "Insalata Frutti di Mare klein", "name_ru": "Салат с морепродуктами (маленький)", "price": 16.50, "desc": { "de": "mit frischen Meeresfrüchten und Brötchen", "ru": "со свежими морепродуктами и булочкой (маленькая порция)" } },
+        { "nr": 5, "name": "Insalata Frutti di Mare groß", "name_ru": "Салат с морепродуктами (большой)", "price": 19.50, "desc": { "de": "mit frischen Meeresfrüchten und Brötchen", "ru": "со свежими морепродуктами и булочкой (большая порция)" } }
       ]
     },
     {
       "id": "soups",
       "items": [
-        { "nr": 6, "name": "Zuppa di Cipolle", "price": 8.50, "desc": { "de": "Zwiebelsuppe mit Toast und Käse überbacken", "ru": "луковый суп с тостом, запечённый с сыром" } },
-        { "nr": 7, "name": "Zuppa di Pomodoro", "price": 8.50, "desc": { "de": "Tomatensuppe mit Sahnehäubchen", "ru": "томатный суп со сливками" } },
-        { "nr": 8, "name": "Stracciatella", "price": 8.50, "desc": { "de": "Rinderbrühe mit Ei", "ru": "говяжий бульон с яйцом" } }
+        { "nr": 6, "name": "Zuppa di Cipolle", "name_ru": "Луковый суп", "price": 8.50, "desc": { "de": "Zwiebelsuppe mit Toast und Käse überbacken", "ru": "луковый суп с тостом, запечённый с сыром" } },
+        { "nr": 7, "name": "Zuppa di Pomodoro", "name_ru": "Томатный суп", "price": 8.50, "desc": { "de": "Tomatensuppe mit Sahnehäubchen", "ru": "томатный суп со сливками" } },
+        { "nr": 8, "name": "Stracciatella", "name_ru": "Страчателла (бульон с яйцом)", "price": 8.50, "desc": { "de": "Rinderbrühe mit Ei", "ru": "говяжий бульон с яйцом" } }
       ]
     },
     {
       "id": "salads",
       "items": [
-        { "nr": 9, "name": "Beilagensalat", "price": 5.50, "desc": { "de": "Mixsalat, Mais, Karotten, italienisches Dressing", "ru": "салатная смесь, кукуруза, морковь, итальянская заправка" } },
-        { "nr": 10, "name": "Grüner Salat", "price": 8.50, "desc": { "de": "Kopfsalat, Tomaten, Gurken, Zwiebeln, italienisches Dressing", "ru": "салат латук, помидоры, огурцы, лук, итальянская заправка" } },
-        { "nr": 11, "name": "Gemischter Salat", "price": 9.50, "desc": { "de": "Tomaten, Gurken, Zwiebeln, Mais, Oliven, Karotten, Balsamicoessig und Olivenöl", "ru": "помидоры, огурцы, лук, кукуруза, оливки, морковь, бальзамический уксус и оливковое масло" } },
-        { "nr": 12, "name": "Kleiner italienischer Salat", "price": 12.50, "ham": true, "desc": { "de": "Kopfsalat, Tomaten, Gurken, Schinken, Käse, Ei, Thunfisch, Zwiebeln, Oliven, italienisches Dressing", "ru": "салат латук, помидоры, огурцы, ветчина, сыр, яйцо, тунец, лук, оливки, итальянская заправка" } },
-        { "nr": 13, "name": "Großer italienischer Salat", "price": 14.50, "ham": true, "desc": { "de": "wie Nr. 12, größere Portion", "ru": "как № 12, большая порция" } },
-        { "nr": 14, "name": "Kleiner Salat Irrbühl", "price": 12.50, "ham": true, "desc": { "de": "Kopfsalat, Tomaten, Gurken, Schinken, Käse, Ei, Thunfisch, Cocktaildressing", "ru": "салат латук, помидоры, огурцы, ветчина, сыр, яйцо, тунец, коктейльная заправка" } },
-        { "nr": 15, "name": "Großer Salat Irrbühl", "price": 14.50, "ham": true, "desc": { "de": "wie Nr. 14, größere Portion", "ru": "как № 14, большая порция" } },
-        { "nr": 16, "name": "Salat Primavera", "price": 14.50, "desc": { "de": "Kopfsalat, Tomaten, Gurken, Fetakäse, milde Peperoni, Mais, Karotten, Cocktaildressing", "ru": "салат латук, помидоры, огурцы, сыр фета, мягкий перец пеперони, кукуруза, морковь, коктейльная заправка" } },
-        { "nr": 17, "name": "Salat Caprese", "price": 12.50, "desc": { "de": "frische Tomaten, Mozzarella, Basilikum, italienisches Dressing", "ru": "свежие помидоры, моцарелла, базилик, итальянская заправка" } },
-        { "nr": 18, "name": "Kopfsalat mit Rinderfiletstreifen", "price": 20.50, "desc": { "de": "Tomaten, Gurken, Zwiebeln, frische Champignons, Karotten, italienisches Dressing", "ru": "салат латук с полосками говяжьего филе: помидоры, огурцы, лук, свежие шампиньоны, морковь, итальянская заправка" } },
-        { "nr": 19, "name": "Kopfsalat mit Putenbruststreifen", "price": 18.50, "desc": { "de": "Tomaten, Gurken, Zwiebeln, Karotten, italienisches Dressing", "ru": "салат латук с полосками индюшачьей грудки: помидоры, огурцы, лук, морковь, итальянская заправка" } },
-        { "nr": 20, "name": "Kopfsalat mit Lachsstreifen", "price": 22.50, "desc": { "de": "Tomaten, Gurken, Zwiebeln, Karotten, italienisches Dressing", "ru": "салат латук с полосками лосося: помидоры, огурцы, лук, морковь, итальянская заправка" } },
-        { "nr": 21, "name": "Feldsalat mit Rinderfiletstreifen", "price": 21.50, "desc": { "de": "Tomaten, Gurken, Zwiebeln, frische Champignons, Karotten, italienisches Dressing", "ru": "салат корн с полосками говяжьего филе: помидоры, огурцы, лук, свежие шампиньоны, морковь, итальянская заправка" } },
-        { "nr": 22, "name": "Feldsalat mit Putenbruststreifen", "price": 19.50, "desc": { "de": "Tomaten, Gurken, Zwiebeln, Karotten, italienisches Dressing", "ru": "салат корн с полосками индюшачьей грудки: помидоры, огурцы, лук, морковь, итальянская заправка" } },
-        { "nr": 23, "name": "Feldsalat mit Lachsstreifen", "price": 23.50, "desc": { "de": "Tomaten, Gurken, Zwiebeln, Karotten, italienisches Dressing", "ru": "салат корн с полосками лосося: помидоры, огурцы, лук, морковь, итальянская заправка" } }
+        { "nr": 9, "name": "Beilagensalat", "name_ru": "Гарнирный салат", "price": 5.50, "desc": { "de": "Mixsalat, Mais, Karotten, italienisches Dressing", "ru": "салатная смесь, кукуруза, морковь, итальянская заправка" } },
+        { "nr": 10, "name": "Grüner Salat", "name_ru": "Зелёный салат", "price": 8.50, "desc": { "de": "Kopfsalat, Tomaten, Gurken, Zwiebeln, italienisches Dressing", "ru": "салат латук, помидоры, огурцы, лук, итальянская заправка" } },
+        { "nr": 11, "name": "Gemischter Salat", "name_ru": "Смешанный салат", "price": 9.50, "desc": { "de": "Tomaten, Gurken, Zwiebeln, Mais, Oliven, Karotten, Balsamicoessig und Olivenöl", "ru": "помидоры, огурцы, лук, кукуруза, оливки, морковь, бальзамический уксус и оливковое масло" } },
+        { "nr": 12, "name": "Kleiner italienischer Salat", "name_ru": "Итальянский салат (маленький)", "price": 12.50, "ham": true, "desc": { "de": "Kopfsalat, Tomaten, Gurken, Schinken, Käse, Ei, Thunfisch, Zwiebeln, Oliven, italienisches Dressing", "ru": "салат латук, помидоры, огурцы, ветчина, сыр, яйцо, тунец, лук, оливки, итальянская заправка" } },
+        { "nr": 13, "name": "Großer italienischer Salat", "name_ru": "Итальянский салат (большой)", "price": 14.50, "ham": true, "desc": { "de": "wie Nr. 12, größere Portion", "ru": "как № 12, большая порция" } },
+        { "nr": 14, "name": "Kleiner Salat Irrbühl", "name_ru": "Салат «Иррбюль» (маленький)", "price": 12.50, "ham": true, "desc": { "de": "Kopfsalat, Tomaten, Gurken, Schinken, Käse, Ei, Thunfisch, Cocktaildressing", "ru": "салат латук, помидоры, огурцы, ветчина, сыр, яйцо, тунец, коктейльная заправка" } },
+        { "nr": 15, "name": "Großer Salat Irrbühl", "name_ru": "Салат «Иррбюль» (большой)", "price": 14.50, "ham": true, "desc": { "de": "wie Nr. 14, größere Portion", "ru": "как № 14, большая порция" } },
+        { "nr": 16, "name": "Salat Primavera", "name_ru": "Салат «Примавера»", "price": 14.50, "desc": { "de": "Kopfsalat, Tomaten, Gurken, Fetakäse, milde Peperoni, Mais, Karotten, Cocktaildressing", "ru": "салат латук, помидоры, огурцы, сыр фета, мягкий перец пеперони, кукуруза, морковь, коктейльная заправка" } },
+        { "nr": 17, "name": "Salat Caprese", "name_ru": "Салат «Капрезе»", "price": 12.50, "desc": { "de": "frische Tomaten, Mozzarella, Basilikum, italienisches Dressing", "ru": "свежие помидоры, моцарелла, базилик, итальянская заправка" } },
+        { "nr": 18, "name": "Kopfsalat mit Rinderfiletstreifen", "name_ru": "Салат латук с говяжьим филе", "price": 20.50, "desc": { "de": "Tomaten, Gurken, Zwiebeln, frische Champignons, Karotten, italienisches Dressing", "ru": "салат латук с полосками говяжьего филе: помидоры, огурцы, лук, свежие шампиньоны, морковь, итальянская заправка" } },
+        { "nr": 19, "name": "Kopfsalat mit Putenbruststreifen", "name_ru": "Салат латук с индюшачьей грудкой", "price": 18.50, "desc": { "de": "Tomaten, Gurken, Zwiebeln, Karotten, italienisches Dressing", "ru": "салат латук с полосками индюшачьей грудки: помидоры, огурцы, лук, морковь, итальянская заправка" } },
+        { "nr": 20, "name": "Kopfsalat mit Lachsstreifen", "name_ru": "Салат латук с лососем", "price": 22.50, "desc": { "de": "Tomaten, Gurken, Zwiebeln, Karotten, italienisches Dressing", "ru": "салат латук с полосками лосося: помидоры, огурцы, лук, морковь, итальянская заправка" } },
+        { "nr": 21, "name": "Feldsalat mit Rinderfiletstreifen", "name_ru": "Салат корн с говяжьим филе", "price": 21.50, "desc": { "de": "Tomaten, Gurken, Zwiebeln, frische Champignons, Karotten, italienisches Dressing", "ru": "салат корн с полосками говяжьего филе: помидоры, огурцы, лук, свежие шампиньоны, морковь, итальянская заправка" } },
+        { "nr": 22, "name": "Feldsalat mit Putenbruststreifen", "name_ru": "Салат корн с индюшачьей грудкой", "price": 19.50, "desc": { "de": "Tomaten, Gurken, Zwiebeln, Karotten, italienisches Dressing", "ru": "салат корн с полосками индюшачьей грудки: помидоры, огурцы, лук, морковь, итальянская заправка" } },
+        { "nr": 23, "name": "Feldsalat mit Lachsstreifen", "name_ru": "Салат корн с лососем", "price": 23.50, "desc": { "de": "Tomaten, Gurken, Zwiebeln, Karotten, italienisches Dressing", "ru": "салат корн с полосками лосося: помидоры, огурцы, лук, морковь, итальянская заправка" } }
       ]
     },
     {
       "id": "toast",
       "items": [
-        { "nr": 24, "name": "Toast Irrbühl", "price": 20.50, "desc": { "de": "Schweinelende mit Champignonsauce, Käse überbacken und Salat", "ru": "свиная вырезка с грибным соусом, запечённая с сыром, с салатом" } },
-        { "nr": 25, "name": "Putensteak auf Toast", "price": 20.50, "desc": { "de": "mit Ananas, Käse überbacken und Salat", "ru": "стейк из индейки на тосте с ананасом, запечённый с сыром, с салатом" } }
+        { "nr": 24, "name": "Toast Irrbühl", "name_ru": "Тост «Иррбюль»", "price": 20.50, "desc": { "de": "Schweinelende mit Champignonsauce, Käse überbacken und Salat", "ru": "свиная вырезка с грибным соусом, запечённая с сыром, с салатом" } },
+        { "nr": 25, "name": "Putensteak auf Toast", "name_ru": "Стейк из индейки на тосте", "price": 20.50, "desc": { "de": "mit Ananas, Käse überbacken und Salat", "ru": "стейк из индейки на тосте с ананасом, запечённый с сыром, с салатом" } }
       ]
     },
     {
       "id": "pizza",
       "items": [
-        { "nr": 26, "name": "Pizza Margherita", "price": 10.50, "desc": { "de": "mit Tomatensauce und Käse", "ru": "с томатным соусом и сыром" } },
-        { "nr": 27, "name": "Pizza Milano", "price": 11.50, "desc": { "de": "mit Salami", "ru": "с салями" } },
-        { "nr": 28, "name": "Pizza Firenze", "price": 11.50, "ham": true, "desc": { "de": "mit Schinken", "ru": "с ветчиной" } },
-        { "nr": 29, "name": "Pizza Diavola", "price": 11.50, "desc": { "de": "mit Peperoniwurst", "ru": "с острой колбасой пепперони" } },
-        { "nr": 30, "name": "Pizza Italia", "price": 13.50, "ham": true, "desc": { "de": "Salami, Schinken, frische Champignons", "ru": "салями, ветчина, свежие шампиньоны" } },
-        { "nr": 31, "name": "Pizza Roma", "price": 13.50, "desc": { "de": "Peperoniwurst, Zwiebeln, Knoblauch", "ru": "острая колбаса пепперони, лук, чеснок" } },
-        { "nr": 32, "name": "Pizza Hawaii", "price": 12.50, "ham": true, "desc": { "de": "Schinken, Ananas", "ru": "ветчина, ананас" } },
-        { "nr": 33, "name": "Pizza Rimini", "price": 14.50, "ham": true, "desc": { "de": "Schinken, Peperoniwurst, milde Peperoni, Zwiebeln, Oliven", "ru": "ветчина, острая колбаса пепперони, мягкий перец пеперони, лук, оливки" } },
-        { "nr": 34, "name": "Pizza Calabrese", "price": 13.50, "desc": { "de": "Peperoniwurst, milde Peperoni, Zwiebeln, Knoblauch, Oliven", "ru": "острая колбаса пепперони, мягкий перец пеперони, лук, чеснок, оливки" } },
-        { "nr": 35, "name": "Pizza Spezial", "price": 14.50, "ham": true, "desc": { "de": "Salami, Schinken, Peperoniwurst, frische Champignons, Zwiebeln, Paprika", "ru": "салями, ветчина, острая колбаса пепперони, свежие шампиньоны, лук, сладкий перец" } },
-        { "nr": 36, "name": "Pizza Irrbühl", "price": 14.50, "ham": true, "desc": { "de": "Salami, Schinken, Peperoniwurst, frische Champignons, Shrimps", "ru": "салями, ветчина, острая колбаса пепперони, свежие шампиньоны, креветки" } },
-        { "nr": 37, "name": "Pizza Quattro Stagioni", "price": 13.50, "ham": true, "desc": { "de": "Salami, Schinken, frische Champignons, Artischocken, Oliven", "ru": "салями, ветчина, свежие шампиньоны, артишоки, оливки" } },
-        { "nr": 38, "name": "Pizza Capitano", "price": 14.50, "desc": { "de": "Parmaschinken, Parmesankäse, Rucola", "ru": "пармская ветчина, пармезан, руккола" } },
-        { "nr": 39, "name": "Pizza Casa", "price": 14.50, "ham": true, "desc": { "de": "mit Allem (kein Fisch)", "ru": "со всем (без рыбы)" } },
-        { "nr": 40, "name": "Pizza Funghi", "price": 12.50, "desc": { "de": "frische Champignons", "ru": "свежие шампиньоны" } },
-        { "nr": 41, "name": "Pizza Tonno", "price": 13.50, "desc": { "de": "Thunfisch, Zwiebeln, Knoblauch", "ru": "тунец, лук, чеснок" } },
-        { "nr": 42, "name": "Pizza Calzone", "price": 14.50, "ham": true, "desc": { "de": "Pizzatasche gefüllt mit Salami, Schinken, Peperoniwurst, frischen Champignons, Paprika", "ru": "закрытая пицца с начинкой из салями, ветчины, острой колбасы пепперони, свежих шампиньонов и сладкого перца" } },
-        { "nr": 43, "name": "Pizza Frutti di Mare", "price": 18.50, "desc": { "de": "Thunfisch, frische Meeresfrüchte", "ru": "тунец, свежие морепродукты" } },
-        { "nr": 44, "name": "Pizza Antica", "price": 13.50, "desc": { "de": "Shrimps, Blattspinat, Knoblauch", "ru": "креветки, листовой шпинат, чеснок" } },
-        { "nr": 45, "name": "Pizza Caprese", "price": 12.50, "desc": { "de": "frische Tomaten, Mozzarella, Basilikum", "ru": "свежие помидоры, моцарелла, базилик" } },
-        { "nr": 46, "name": "Pizza Quattro Formaggi", "price": 17.50, "desc": { "de": "4 verschiedene Käsesorten", "ru": "4 разных сорта сыра" } },
-        { "nr": 47, "name": "Pizza Vegetaria", "price": 12.50, "desc": { "de": "mit Gemüse", "ru": "с овощами" } },
-        { "nr": 48, "name": "Pizza Insalata", "price": 12.50, "desc": { "de": "Salate der Saison, Tomaten, Gurken, Karotten, Balsamicoessig, Olivenöl", "ru": "сезонные салаты, помидоры, огурцы, морковь, бальзамический уксус, оливковое масло" } },
-        { "nr": 49, "name": "Pizzabrot", "price": 7.50, "desc": { "de": "mit Tomatensauce und Kräutern", "ru": "с томатным соусом и травами" } },
-        { "nr": 50, "name": "Pizzabrot", "price": 7.50, "desc": { "de": "mit Knoblauch und Kräutern", "ru": "с чесноком и травами" } }
+        { "nr": 26, "name": "Pizza Margherita", "name_ru": "Пицца «Маргарита»", "price": 10.50, "desc": { "de": "mit Tomatensauce und Käse", "ru": "с томатным соусом и сыром" } },
+        { "nr": 27, "name": "Pizza Milano", "name_ru": "Пицца «Милано»", "price": 11.50, "desc": { "de": "mit Salami", "ru": "с салями" } },
+        { "nr": 28, "name": "Pizza Firenze", "name_ru": "Пицца «Фиренце»", "price": 11.50, "ham": true, "desc": { "de": "mit Schinken", "ru": "с ветчиной" } },
+        { "nr": 29, "name": "Pizza Diavola", "name_ru": "Пицца «Диавола»", "price": 11.50, "desc": { "de": "mit Peperoniwurst", "ru": "с острой колбасой пепперони" } },
+        { "nr": 30, "name": "Pizza Italia", "name_ru": "Пицца «Италия»", "price": 13.50, "ham": true, "desc": { "de": "Salami, Schinken, frische Champignons", "ru": "салями, ветчина, свежие шампиньоны" } },
+        { "nr": 31, "name": "Pizza Roma", "name_ru": "Пицца «Рома»", "price": 13.50, "desc": { "de": "Peperoniwurst, Zwiebeln, Knoblauch", "ru": "острая колбаса пепперони, лук, чеснок" } },
+        { "nr": 32, "name": "Pizza Hawaii", "name_ru": "Пицца «Гавайи»", "price": 12.50, "ham": true, "desc": { "de": "Schinken, Ananas", "ru": "ветчина, ананас" } },
+        { "nr": 33, "name": "Pizza Rimini", "name_ru": "Пицца «Римини»", "price": 14.50, "ham": true, "desc": { "de": "Schinken, Peperoniwurst, milde Peperoni, Zwiebeln, Oliven", "ru": "ветчина, острая колбаса пепперони, мягкий перец пеперони, лук, оливки" } },
+        { "nr": 34, "name": "Pizza Calabrese", "name_ru": "Пицца «Калабрезе»", "price": 13.50, "desc": { "de": "Peperoniwurst, milde Peperoni, Zwiebeln, Knoblauch, Oliven", "ru": "острая колбаса пепперони, мягкий перец пеперони, лук, чеснок, оливки" } },
+        { "nr": 35, "name": "Pizza Spezial", "name_ru": "Пицца «Специале»", "price": 14.50, "ham": true, "desc": { "de": "Salami, Schinken, Peperoniwurst, frische Champignons, Zwiebeln, Paprika", "ru": "салями, ветчина, острая колбаса пепперони, свежие шампиньоны, лук, сладкий перец" } },
+        { "nr": 36, "name": "Pizza Irrbühl", "name_ru": "Пицца «Иррбюль»", "price": 14.50, "ham": true, "desc": { "de": "Salami, Schinken, Peperoniwurst, frische Champignons, Shrimps", "ru": "салями, ветчина, острая колбаса пепперони, свежие шампиньоны, креветки" } },
+        { "nr": 37, "name": "Pizza Quattro Stagioni", "name_ru": "Пицца «Четыре сезона»", "price": 13.50, "ham": true, "desc": { "de": "Salami, Schinken, frische Champignons, Artischocken, Oliven", "ru": "салями, ветчина, свежие шампиньоны, артишоки, оливки" } },
+        { "nr": 38, "name": "Pizza Capitano", "name_ru": "Пицца «Капитано»", "price": 14.50, "desc": { "de": "Parmaschinken, Parmesankäse, Rucola", "ru": "пармская ветчина, пармезан, руккола" } },
+        { "nr": 39, "name": "Pizza Casa", "name_ru": "Пицца «Каза»", "price": 14.50, "ham": true, "desc": { "de": "mit Allem (kein Fisch)", "ru": "со всем (без рыбы)" } },
+        { "nr": 40, "name": "Pizza Funghi", "name_ru": "Пицца «Фунги» (с грибами)", "price": 12.50, "desc": { "de": "frische Champignons", "ru": "свежие шампиньоны" } },
+        { "nr": 41, "name": "Pizza Tonno", "name_ru": "Пицца «Тонно» (с тунцом)", "price": 13.50, "desc": { "de": "Thunfisch, Zwiebeln, Knoblauch", "ru": "тунец, лук, чеснок" } },
+        { "nr": 42, "name": "Pizza Calzone", "name_ru": "Пицца «Кальцоне»", "price": 14.50, "ham": true, "desc": { "de": "Pizzatasche gefüllt mit Salami, Schinken, Peperoniwurst, frischen Champignons, Paprika", "ru": "закрытая пицца с начинкой из салями, ветчины, острой колбасы пепперони, свежих шампиньонов и сладкого перца" } },
+        { "nr": 43, "name": "Pizza Frutti di Mare", "name_ru": "Пицца «Фрутти ди маре»", "price": 18.50, "desc": { "de": "Thunfisch, frische Meeresfrüchte", "ru": "тунец, свежие морепродукты" } },
+        { "nr": 44, "name": "Pizza Antica", "name_ru": "Пицца «Антика»", "price": 13.50, "desc": { "de": "Shrimps, Blattspinat, Knoblauch", "ru": "креветки, листовой шпинат, чеснок" } },
+        { "nr": 45, "name": "Pizza Caprese", "name_ru": "Пицца «Капрезе»", "price": 12.50, "desc": { "de": "frische Tomaten, Mozzarella, Basilikum", "ru": "свежие помидоры, моцарелла, базилик" } },
+        { "nr": 46, "name": "Pizza Quattro Formaggi", "name_ru": "Пицца «Четыре сыра»", "price": 17.50, "desc": { "de": "4 verschiedene Käsesorten", "ru": "4 разных сорта сыра" } },
+        { "nr": 47, "name": "Pizza Vegetaria", "name_ru": "Пицца «Вегетариана»", "price": 12.50, "desc": { "de": "mit Gemüse", "ru": "с овощами" } },
+        { "nr": 48, "name": "Pizza Insalata", "name_ru": "Пицца «Инсалата» (с салатом)", "price": 12.50, "desc": { "de": "Salate der Saison, Tomaten, Gurken, Karotten, Balsamicoessig, Olivenöl", "ru": "сезонные салаты, помидоры, огурцы, морковь, бальзамический уксус, оливковое масло" } },
+        { "nr": 49, "name": "Pizzabrot", "name_ru": "Хлеб-пицца", "price": 7.50, "desc": { "de": "mit Tomatensauce und Kräutern", "ru": "с томатным соусом и травами" } },
+        { "nr": 50, "name": "Pizzabrot", "name_ru": "Хлеб-пицца", "price": 7.50, "desc": { "de": "mit Knoblauch und Kräutern", "ru": "с чесноком и травами" } }
       ]
     },
     {
       "id": "pasta",
       "items": [
-        { "nr": 51, "name": "Spaghetti Napoli", "price": 14.50, "desc": { "de": "Tomatensauce und Basilikum", "ru": "томатный соус и базилик" } },
-        { "nr": 52, "name": "Spaghetti Bolognese", "price": 15.50, "desc": { "de": "Hackfleischsauce", "ru": "мясной соус из фарша" } },
-        { "nr": 53, "name": "Spaghetti Carbonara", "price": 15.50, "ham": true, "desc": { "de": "Schinken-Sahne-Sauce und Eigelb", "ru": "сливочный соус с ветчиной и яичный желток" } },
-        { "nr": 54, "name": "Spaghetti Aglio e Olio", "price": 15.50, "desc": { "de": "milde Peperoni, Knoblauch, Olivenöl", "ru": "мягкий перец пеперони, чеснок, оливковое масло" } },
-        { "nr": 55, "name": "Spaghetti Arrabiata", "price": 15.50, "desc": { "de": "Peperoniwurst, milde Peperoni, Knoblauch, Oliven", "ru": "острая колбаса пепперони, мягкий перец пеперони, чеснок, оливки" } },
-        { "nr": 56, "name": "Spaghetti Frutti di Mare", "price": 18.50, "desc": { "de": "Thunfisch, frische Meeresfrüchte", "ru": "тунец, свежие морепродукты" } },
-        { "nr": 57, "name": "Penne alla Panna", "price": 14.50, "ham": true, "desc": { "de": "Schinken-Sahne-Sauce", "ru": "сливочный соус с ветчиной" } },
-        { "nr": 58, "name": "Penne alla Pecoraia", "price": 15.50, "desc": { "de": "Fetakäse und Knoblauch in Tomaten-Sahne-Sauce", "ru": "сыр фета и чеснок в томатно-сливочном соусе" } },
-        { "nr": 59, "name": "Penne Barese", "price": 16.50, "desc": { "de": "Brokkoli in Gorgonzolasauce, Käse überbacken", "ru": "брокколи в соусе горгонзола, запечённые с сыром" } },
-        { "nr": 60, "name": "Tagliatelle Quattro Formaggi", "price": 17.50, "desc": { "de": "4 verschiedene Käsesorten", "ru": "4 разных сорта сыра" } }
+        { "nr": 51, "name": "Spaghetti Napoli", "name_ru": "Спагетти «Наполи»", "price": 14.50, "desc": { "de": "Tomatensauce und Basilikum", "ru": "томатный соус и базилик" } },
+        { "nr": 52, "name": "Spaghetti Bolognese", "name_ru": "Спагетти «Болоньезе»", "price": 15.50, "desc": { "de": "Hackfleischsauce", "ru": "мясной соус из фарша" } },
+        { "nr": 53, "name": "Spaghetti Carbonara", "name_ru": "Спагетти «Карбонара»", "price": 15.50, "ham": true, "desc": { "de": "Schinken-Sahne-Sauce und Eigelb", "ru": "сливочный соус с ветчиной и яичный желток" } },
+        { "nr": 54, "name": "Spaghetti Aglio e Olio", "name_ru": "Спагетти «Аглио э олио»", "price": 15.50, "desc": { "de": "milde Peperoni, Knoblauch, Olivenöl", "ru": "мягкий перец пеперони, чеснок, оливковое масло" } },
+        { "nr": 55, "name": "Spaghetti Arrabiata", "name_ru": "Спагетти «Аррабьята»", "price": 15.50, "desc": { "de": "Peperoniwurst, milde Peperoni, Knoblauch, Oliven", "ru": "острая колбаса пепперони, мягкий перец пеперони, чеснок, оливки" } },
+        { "nr": 56, "name": "Spaghetti Frutti di Mare", "name_ru": "Спагетти «Фрутти ди маре»", "price": 18.50, "desc": { "de": "Thunfisch, frische Meeresfrüchte", "ru": "тунец, свежие морепродукты" } },
+        { "nr": 57, "name": "Penne alla Panna", "name_ru": "Пенне «Алла панна»", "price": 14.50, "ham": true, "desc": { "de": "Schinken-Sahne-Sauce", "ru": "сливочный соус с ветчиной" } },
+        { "nr": 58, "name": "Penne alla Pecoraia", "name_ru": "Пенне «Алла пекорайя»", "price": 15.50, "desc": { "de": "Fetakäse und Knoblauch in Tomaten-Sahne-Sauce", "ru": "сыр фета и чеснок в томатно-сливочном соусе" } },
+        { "nr": 59, "name": "Penne Barese", "name_ru": "Пенне «Барезе»", "price": 16.50, "desc": { "de": "Brokkoli in Gorgonzolasauce, Käse überbacken", "ru": "брокколи в соусе горгонзола, запечённые с сыром" } },
+        { "nr": 60, "name": "Tagliatelle Quattro Formaggi", "name_ru": "Тальятелле «Четыре сыра»", "price": 17.50, "desc": { "de": "4 verschiedene Käsesorten", "ru": "4 разных сорта сыра" } }
       ]
     }
   ]

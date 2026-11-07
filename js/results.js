@@ -58,7 +58,7 @@
       if (anon) people.push(anon + " × " + S.escapeHtml(tr.resultsAnonymous));
       return '<li class="row result' + (names.length ? "" : " zero") + '">' +
         '<span class="result-nr">' + it.nr + "</span>" +
-        '<span class="result-name">' + S.escapeHtml(it.name) + (it.ham ? "*" : "") + "</span>" +
+        '<span class="result-name">' + S.escapeHtml(lang === "ru" && it.name_ru ? it.name_ru : it.name) + (it.ham ? "*" : "") + "</span>" +
         '<span class="result-count">' + names.length + "</span>" +
         '<span class="result-bar" aria-hidden="true"><span style="width:' + (names.length / max * 100) + '%"></span></span>' +
         (people.length ? '<p class="result-people">' + people.join(", ") + "</p>" : "") +

@@ -29,7 +29,9 @@
   function t() { return i18n[lang]; }
   function allItems() { return menu.categories.flatMap(c => c.items); }
   function findItem(nr) { return allItems().find(i => i.nr === nr); }
-  function dishLabel(item) { return item.nr + ". " + item.name + (item.ham ? "*" : ""); }
+  // Im russischen Modus russischer Name, sonst Original (wie auf der Karte)
+  function dishName(item) { return lang === "ru" && item.name_ru ? item.name_ru : item.name; }
+  function dishLabel(item) { return item.nr + ". " + dishName(item) + (item.ham ? "*" : ""); }
 
   function getVoted() {
     try { return JSON.parse(S.store.get(VOTED_KEY)); } catch (e) { return null; }
@@ -45,7 +47,7 @@
     const q = normalize(query.trim());
     if (!q) return true;
     if (/^\d+$/.test(q)) return String(item.nr) === q || String(item.nr).startsWith(q);
-    const hay = normalize([item.nr, item.name, item.desc.de, item.desc.ru].join(" "));
+    const hay = normalize([item.nr, item.name, item.name_ru || "", item.desc.de, item.desc.ru].join(" "));
     return q.split(/\s+/).every(w => hay.includes(w));
   }
 
@@ -69,8 +71,9 @@
           (selectedNr === it.nr ? " checked" : "") + ">" +
           '<label for="' + id + '" class="row dish">' +
           '<span class="dish-nr">' + it.nr + "</span>" +
-          '<span class="dish-main"><span><span class="dish-name">' + S.escapeHtml(it.name) + "</span>" +
+          '<span class="dish-main"><span><span class="dish-name">' + S.escapeHtml(dishName(it)) + "</span>" +
           (it.ham ? '<span class="ham" title="' + S.escapeHtml(tr.hamNote) + '">*</span>' : "") + "</span>" +
+          (dishName(it) !== it.name ? '<span class="dish-orig" lang="de">' + S.escapeHtml(it.name) + "</span>" : "") +
           '<span class="dish-desc">' + S.escapeHtml(it.desc[lang] || it.desc.de) + "</span></span>" +
           '<span class="dish-side"><span class="dish-price">' + S.formatPrice(it.price, lang) + "</span>" +
           CHECK + "</span>" +

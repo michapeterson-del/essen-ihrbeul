@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
-  <title>Umfrage – Zum Irrbühl</title>
+  <title>Bestellung – Zum Irrbühl</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍝</text></svg>">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -34,7 +34,7 @@
 
     <form id="survey" novalidate>
       <h1 data-i18n="question">Was möchtest du essen?</h1>
-      <p class="subhead" data-i18n="intro">Wähle genau ein Gericht aus. Du kannst nur einmal abstimmen.</p>
+      <p class="subhead" data-i18n="intro">Wähle genau ein Gericht aus. Du kannst nur einmal bestellen.</p>
 
       <section class="section">
         <ul class="group">
@@ -56,7 +56,7 @@
             <span class="selection-label" data-i18n="selectedLabel">Deine Wahl:</span>
             <span class="selection-value" id="selected-dish">—</span>
           </div>
-          <button type="submit" id="submit" class="btn-primary" disabled data-i18n="submit">Abstimmen</button>
+          <button type="submit" id="submit" class="btn-primary" disabled data-i18n="submit">Bestellen</button>
         </div>
       </div>
     </form>
@@ -64,16 +64,16 @@
     <section id="thanks" class="thanks" hidden>
       <svg class="thanks-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="m7 12.5 3.2 3.2L17 9" fill="none" stroke="var(--color-surface)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <h1 data-i18n="thanksTitle">Danke!</h1>
-      <p class="subhead" data-i18n="thanksText">Deine Stimme wurde gespeichert.</p>
+      <p class="subhead" data-i18n="thanksText">Deine Bestellung ist eingegangen.</p>
       <p id="already" class="notice" data-i18n="alreadyVoted" hidden></p>
       <ul class="group">
         <li class="row thanks-choice">
-          <small data-i18n="thanksChoice">Du hast gewählt:</small>
+          <small data-i18n="thanksChoice">Du hast bestellt:</small>
           <strong id="thanks-choice"></strong>
         </li>
         <li>
           <a class="row link-row" href="results.html">
-            <span data-i18n="toResults">Ergebnisse ansehen</span>
+            <span data-i18n="toResults">Alle Bestellungen ansehen</span>
             <svg class="chevron" viewBox="0 0 8 14" aria-hidden="true"><path d="m1 1 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </li>

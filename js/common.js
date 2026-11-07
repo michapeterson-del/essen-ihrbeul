@@ -17,7 +17,7 @@
 
   function getLang() {
     const l = store.get(LANG_KEY);
-    return l === "ru" ? "ru" : "de";
+    return l === "de" ? "de" : "ru"; // Standard: Russisch, Deutsch nur wenn gewählt
   }
   function setLang(l) { store.set(LANG_KEY, l); }
 

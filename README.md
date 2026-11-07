@@ -3,7 +3,7 @@
 Einmalige Sammelbestellung: Man wählt ein Gericht, trägt seinen Namen ein (Pflicht), bestellt und sieht eine Danke-Seite; mit „Noch etwas bestellen“ geht es zurück zur Karte. Mehrfach bestellen ist erlaubt.
 Alle Bestellungen stehen unter **`/results`**, ohne Passwort.
 
-- Deutsch / Русский (Button oben rechts)
+- Russisch (Standard) / Deutsch – Umschalter oben rechts, Wahl wird gemerkt
 - Suchleiste, Gerichte nach Kategorien, `*` = mit Vorderschinken
 - Mobile-first, heller/dunkler Modus
 

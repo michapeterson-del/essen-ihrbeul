@@ -117,7 +117,7 @@ function serveStatic(req, res, url) {
     if (err) return send(res, 404, "Not found");
     res.writeHead(200, {
       "Content-Type": TYPES[path.extname(file)] || "application/octet-stream",
-      "Cache-Control": p.endsWith(".html") || p.endsWith(".json") ? "no-cache" : "public, max-age=3600",
+      "Cache-Control": "no-cache", // immer die aktuelle Version laden (kleine Seite, kein Caching nötig)
       "X-Content-Type-Options": "nosniff"
     });
     res.end(data);

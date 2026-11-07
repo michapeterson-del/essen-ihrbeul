@@ -333,10 +333,6 @@ h1 {
 }
 .btn-secondary:active { background: var(--color-fill); }
 
-/* Link als Listenzeile */
-.link-row { color: var(--color-accent); text-decoration: none; justify-content: space-between; }
-.link-row:active { background: var(--color-fill); }
-.chevron { width: 0.5rem; height: 0.875rem; color: var(--color-label-2); }
 
 /* ========================= Danke-Seite ========================= */
 .thanks { padding-top: var(--space-8); text-align: center; animation: fade-in var(--dur-ease) var(--ease-default); }

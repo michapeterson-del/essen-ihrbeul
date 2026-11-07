@@ -25,23 +25,29 @@ const TYPES = {
 };
 
 fs.mkdirSync(DATA_DIR, { recursive: true });
-let votes = [];
-try { votes = JSON.parse(fs.readFileSync(VOTES_FILE, "utf8")); } catch (e) { votes = []; }
+// Die Datei wird bei jeder Anfrage neu gelesen (kein Zwischenspeicher im RAM).
+// So wirkt z. B. `echo '[]' > /data/votes.json` sofort, ohne Neustart.
+function loadVotes() {
+  try {
+    const data = JSON.parse(fs.readFileSync(VOTES_FILE, "utf8"));
+    return Array.isArray(data) ? data : [];
+  } catch (e) { return []; }
+}
 
 function validDishes() {
   const menu = JSON.parse(fs.readFileSync(path.join(ROOT, "menu.json"), "utf8"));
   return new Map(menu.categories.flatMap(c => c.items).map(i => [i.nr, i.name]));
 }
 
-// Schreibvorgänge nacheinander und atomar (temp-Datei + rename).
-let writing = Promise.resolve();
-function persist() {
-  writing = writing.then(() => {
-    const tmp = VOTES_FILE + ".tmp";
-    fs.writeFileSync(tmp, JSON.stringify(votes, null, 1));
-    fs.renameSync(tmp, VOTES_FILE);
-  }).catch(err => console.error("Speichern fehlgeschlagen:", err));
-  return writing;
+// Lesen + Anhängen + Schreiben passiert synchron in einem Schritt (Node ist
+// single-threaded), daher gehen gleichzeitige Bestellungen nicht verloren.
+// Schreiben atomar über temp-Datei + rename.
+function appendVote(vote) {
+  const votes = loadVotes();
+  votes.push(vote);
+  const tmp = VOTES_FILE + ".tmp";
+  fs.writeFileSync(tmp, JSON.stringify(votes, null, 1));
+  fs.renameSync(tmp, VOTES_FILE);
 }
 
 function send(res, status, body, headers) {
@@ -78,7 +84,7 @@ async function handleApi(req, res, url) {
   if (url.pathname !== "/api/votes") return send(res, 404, { error: "not found" });
 
   if (req.method === "GET") {
-    return send(res, 200, votes);
+    return send(res, 200, loadVotes());
   }
 
   if (req.method === "POST") {
@@ -96,8 +102,8 @@ async function handleApi(req, res, url) {
       lang: input.lang === "ru" ? "ru" : "de",
       created_at: new Date().toISOString()
     };
-    votes.push(vote);
-    await persist();
+    try { appendVote(vote); }
+    catch (err) { console.error("Speichern fehlgeschlagen:", err); return send(res, 500, { error: "save failed" }); }
     const secure = (req.headers["x-forwarded-proto"] || "").includes("https") ? "; Secure" : "";
     return send(res, 201, { ok: true }, {
       "Set-Cookie": COOKIE + "=1; Path=/; Max-Age=31536000; HttpOnly; SameSite=Lax" + secure
@@ -134,5 +140,5 @@ http.createServer((req, res) => {
     send(res, 405, "Method not allowed");
   }
 }).listen(PORT, () => {
-  console.log(`Umfrage läuft auf Port ${PORT} – Stimmen in ${VOTES_FILE} (${votes.length} bisher)`);
+  console.log(`Umfrage läuft auf Port ${PORT} – Stimmen in ${VOTES_FILE} (${loadVotes().length} bisher)`);
 });

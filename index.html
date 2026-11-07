@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <title>Bestellung – Zum Irrbühl</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍝</text></svg>">
-  <link rel="stylesheet" href="css/style.css?v=20261107d">
+  <link rel="stylesheet" href="css/style.css?v=20261107e">
 </head>
 <body class="loading">
   <header class="navbar">
@@ -34,7 +34,7 @@
 
     <form id="survey" novalidate>
       <h1 data-i18n="question">Was möchtest du essen?</h1>
-      <p class="subhead" data-i18n="intro">Wähle genau ein Gericht aus. Du kannst nur einmal bestellen.</p>
+      <p class="subhead" data-i18n="intro">Wähle ein Gericht aus und tippe auf „Bestellen“.</p>
 
       <section class="section">
         <p class="footnote" data-i18n="hamNote">* = mit Vorderschinken</p>
@@ -59,7 +59,6 @@
       <svg class="thanks-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="m7 12.5 3.2 3.2L17 9" fill="none" stroke="var(--color-surface)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <h1 data-i18n="thanksTitle">Danke!</h1>
       <p class="subhead" data-i18n="thanksText">Deine Bestellung ist eingegangen.</p>
-      <p id="already" class="notice" data-i18n="alreadyVoted" hidden></p>
       <ul class="group">
         <li class="row thanks-choice">
           <small data-i18n="thanksChoice">Du hast bestellt:</small>
@@ -67,10 +66,11 @@
         </li>
       </ul>
       <p class="subhead section" data-i18n="guten">Guten Appetit!</p>
+      <p class="section"><button type="button" id="order-again" class="btn-secondary" data-i18n="orderAgain">Noch etwas bestellen</button></p>
     </section>
   </main>
 
-  <script src="js/common.js?v=20261107d"></script>
-  <script src="js/app.js?v=20261107d"></script>
+  <script src="js/common.js?v=20261107e"></script>
+  <script src="js/app.js?v=20261107e"></script>
 </body>
 </html>

@@ -1,7 +1,9 @@
 // Umfrageseite
 (function () {
   const S = window.Survey;
-  const VOTED_KEY = "irrbuehl_voted"; // speichert {nr, name} nach der Abstimmung
+  // Mehrfach bestellen ist erlaubt. Alten Sperr-Merker früherer Versionen entfernen.
+  try { localStorage.removeItem("irrbuehl_voted"); } catch (e) { /* ignore */ }
+  let ordered = null; // zuletzt bestelltes Gericht (nur für die Danke-Ansicht)
 
   let menu, i18n, lang = S.getLang(), selectedNr = null, query = "";
 
@@ -19,7 +21,7 @@
     error: $("#error"),
     thanks: $("#thanks"),
     thanksChoice: $("#thanks-choice"),
-    already: $("#already"),
+    orderAgain: $("#order-again"),
     demo: $("#demo-banner"),
     langBtn: $("#lang-btn"),
   };
@@ -31,9 +33,7 @@
   function dishName(item) { return lang === "ru" && item.name_ru ? item.name_ru : item.name; }
   function dishLabel(item) { return item.nr + ". " + dishName(item) + (item.ham ? "*" : ""); }
 
-  function getVoted() {
-    try { return JSON.parse(S.store.get(VOTED_KEY)); } catch (e) { return null; }
-  }
+
 
   function normalize(s) {
     return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
@@ -92,14 +92,23 @@
     els.bar.classList.toggle("has-selection", !!item);
   }
 
-  function showThanks(voted, justNow) {
+  function showThanks(nr) {
     els.form.hidden = true;
     els.bar.hidden = true;
     els.thanks.hidden = false;
     els.searchRow.hidden = true;
-    els.already.hidden = justNow;
-    const item = findItem(voted.nr);
-    els.thanksChoice.textContent = item ? dishLabel(item) : voted.name;
+    els.thanksChoice.textContent = dishLabel(findItem(nr));
+    window.scrollTo(0, 0);
+  }
+
+  function showMenu() {
+    ordered = null;
+    selectedNr = null;
+    els.thanks.hidden = true;
+    els.form.hidden = false;
+    els.bar.hidden = false;
+    els.searchRow.hidden = false;
+    renderAll();
     window.scrollTo(0, 0);
   }
 
@@ -110,8 +119,7 @@
     els.langBtn.setAttribute("aria-label", t().langSwitch);
     els.langBtn.title = t().langSwitch;
     S.detectBackend().then(m => { els.demo.hidden = m !== "demo"; });
-    const voted = getVoted();
-    if (voted) { showThanks(voted, false); return; }
+    if (ordered != null) { showThanks(ordered); return; }
     renderMenu();
     renderSelection();
   }
@@ -138,7 +146,6 @@
 
   els.form.addEventListener("submit", async e => {
     e.preventDefault();
-    if (getVoted()) { renderAll(); return; }
     const item = findItem(selectedNr);
     if (!item) return;
     if (!window.confirm(S.fmt(t().confirm, { dish: dishLabel(item) }))) return;
@@ -148,17 +155,10 @@
     els.submit.textContent = t().submitting;
     try {
       await S.submitVote({ dish_nr: item.nr, dish_name: item.name, lang });
-      const voted = { nr: item.nr, name: item.name, at: new Date().toISOString() };
-      S.store.set(VOTED_KEY, JSON.stringify(voted));
-      showThanks(voted, true);
+      ordered = item.nr;
+      showThanks(ordered);
     } catch (err) {
       console.error(err);
-      if (err.status === 409) { // Server kennt diesen Browser schon
-        const voted = { nr: item.nr, name: item.name, already: true };
-        S.store.set(VOTED_KEY, JSON.stringify(voted));
-        showThanks(voted, false);
-        return;
-      }
       els.error.textContent = t().error;
       els.error.hidden = false;
       els.submit.disabled = false;
@@ -166,6 +166,8 @@
       els.submit.textContent = t().submit;
     }
   });
+
+  els.orderAgain.addEventListener("click", showMenu);
 
   // ---------- Start ----------
   Promise.all([S.loadJSON("menu.json"), S.loadJSON("i18n.json")])

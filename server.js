@@ -14,7 +14,6 @@ const PORT = Number(process.env.PORT) || 3000;
 const ROOT = __dirname;
 const DATA_DIR = process.env.DATA_DIR || path.join(ROOT, "data");
 const VOTES_FILE = path.join(DATA_DIR, "votes.json");
-const COOKIE = "irrbuehl_voted";
 
 // Nur diese Dateien werden ausgeliefert (server.js, data/ usw. bleiben privat).
 const PUBLIC = /^\/(index\.html|results\.html|menu\.json|i18n\.json|(css|js)\/[\w.-]+\.(css|js))$/;
@@ -78,9 +77,6 @@ function readBody(req) {
   });
 }
 
-function hasVotedCookie(req) {
-  return (req.headers.cookie || "").split(/;\s*/).some(c => c.startsWith(COOKIE + "="));
-}
 
 async function handleApi(req, res, url) {
   if (url.pathname === "/api/health") {
@@ -111,7 +107,6 @@ async function handleApi(req, res, url) {
   }
 
   if (req.method === "POST") {
-    if (hasVotedCookie(req)) return send(res, 409, { error: "already voted" });
     let input;
     try { input = JSON.parse(await readBody(req)); } catch (e) { return send(res, 400, { error: "bad json" }); }
     const dishes = validDishes();
@@ -126,10 +121,7 @@ async function handleApi(req, res, url) {
     };
     try { appendVote(vote); }
     catch (err) { console.error("Speichern fehlgeschlagen:", err); return send(res, 500, { error: "save failed" }); }
-    const secure = (req.headers["x-forwarded-proto"] || "").includes("https") ? "; Secure" : "";
-    return send(res, 201, { ok: true }, {
-      "Set-Cookie": COOKIE + "=1; Path=/; Max-Age=31536000; HttpOnly; SameSite=Lax" + secure
-    });
+    return send(res, 201, { ok: true });
   }
 
   return send(res, 405, { error: "method not allowed" });

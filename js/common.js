@@ -93,8 +93,19 @@
     return res.json();
   }
 
+  // Löschen: key = id der Bestellung, ohne key = alle
+  async function deleteVotes(key) {
+    if ((await detectBackend()) === "demo") {
+      const all = JSON.parse(store.get(LOCAL_VOTES_KEY) || "[]");
+      store.set(LOCAL_VOTES_KEY, JSON.stringify(key ? all.filter(v => (v.id || v.created_at) !== key) : []));
+      return;
+    }
+    const res = await fetch("api/votes" + (key ? "/" + encodeURIComponent(key) : ""), { method: "DELETE" });
+    if (!res.ok && res.status !== 404) throw errorWithStatus("Delete failed: " + res.status, res.status);
+  }
+
   window.Survey = {
     store, loadJSON, getLang, setLang, fmt, formatPrice, escapeHtml,
-    translateDom, detectBackend, submitVote, fetchVotes
+    translateDom, detectBackend, submitVote, fetchVotes, deleteVotes
   };
 })();

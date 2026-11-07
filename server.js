@@ -8,6 +8,7 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 
 const PORT = Number(process.env.PORT) || 3000;
 const ROOT = __dirname;
@@ -42,13 +43,18 @@ function validDishes() {
 // Lesen + Anhängen + Schreiben passiert synchron in einem Schritt (Node ist
 // single-threaded), daher gehen gleichzeitige Bestellungen nicht verloren.
 // Schreiben atomar über temp-Datei + rename.
-function appendVote(vote) {
-  const votes = loadVotes();
-  votes.push(vote);
+function saveVotes(votes) {
   const tmp = VOTES_FILE + ".tmp";
   fs.writeFileSync(tmp, JSON.stringify(votes, null, 1));
   fs.renameSync(tmp, VOTES_FILE);
 }
+function appendVote(vote) {
+  const votes = loadVotes();
+  votes.push(vote);
+  saveVotes(votes);
+}
+// Ältere Einträge haben keine id – dann dient der Zeitstempel als Schlüssel.
+function voteKey(v) { return v.id || v.created_at; }
 
 function send(res, status, body, headers) {
   const isJson = typeof body !== "string" && !Buffer.isBuffer(body);
@@ -81,10 +87,27 @@ async function handleApi(req, res, url) {
     return send(res, 200, { ok: true });
   }
 
+  // Einzelne Bestellung löschen: DELETE /api/votes/<id>
+  if (url.pathname.startsWith("/api/votes/")) {
+    if (req.method !== "DELETE") return send(res, 405, { error: "method not allowed" });
+    const key = decodeURIComponent(url.pathname.slice("/api/votes/".length));
+    const votes = loadVotes();
+    const rest = votes.filter(v => voteKey(v) !== key);
+    if (rest.length === votes.length) return send(res, 404, { error: "not found" });
+    saveVotes(rest);
+    return send(res, 200, { ok: true });
+  }
+
   if (url.pathname !== "/api/votes") return send(res, 404, { error: "not found" });
 
+  // Alle Bestellungen löschen: DELETE /api/votes
+  if (req.method === "DELETE") {
+    saveVotes([]);
+    return send(res, 200, { ok: true });
+  }
+
   if (req.method === "GET") {
-    return send(res, 200, loadVotes());
+    return send(res, 200, loadVotes().map(v => Object.assign({}, v, { id: voteKey(v) })));
   }
 
   if (req.method === "POST") {
@@ -96,6 +119,7 @@ async function handleApi(req, res, url) {
     if (!dishes.has(nr)) return send(res, 400, { error: "unknown dish" });
     const name = typeof input.voter_name === "string" ? input.voter_name.trim().slice(0, 60) : "";
     const vote = {
+      id: crypto.randomUUID(),
       dish_nr: nr,
       dish_name: dishes.get(nr),
       voter_name: name || null,

@@ -117,12 +117,10 @@ async function handleApi(req, res, url) {
     const dishes = validDishes();
     const nr = Number(input.dish_nr);
     if (!dishes.has(nr)) return send(res, 400, { error: "unknown dish" });
-    const name = typeof input.voter_name === "string" ? input.voter_name.trim().slice(0, 60) : "";
     const vote = {
       id: crypto.randomUUID(),
       dish_nr: nr,
       dish_name: dishes.get(nr),
-      voter_name: name || null,
       lang: input.lang === "ru" ? "ru" : "de",
       created_at: new Date().toISOString()
     };

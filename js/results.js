@@ -61,11 +61,11 @@
     els.out.innerHTML = '<ol class="group results-list">' + rows.map(({ it, names }) => {
       const dish = lang === "ru" && it.name_ru ? it.name_ru : it.name;
       const orders = names.map(v => {
-        const who = v.voter_name ? S.escapeHtml(v.voter_name) : '<span class="order-anon">' + S.escapeHtml(tr.resultsAnonymous) + "</span>";
-        return '<li class="order"><span class="order-who">' + who +
-          ' <span class="order-time">' + S.escapeHtml(timeOf(v.created_at)) + "</span></span>" +
-          '<button type="button" class="btn-delete" data-id="' + S.escapeHtml(v.id) + '" data-who="' +
-          S.escapeHtml(v.voter_name || tr.resultsAnonymous) + '" data-dish="' + S.escapeHtml(dish) + '" aria-label="' +
+        const time = timeOf(v.created_at);
+        return '<li class="order"><span class="order-who">' + S.escapeHtml(tr.resultsOrder) +
+          ' <span class="order-time">' + S.escapeHtml(time) + "</span></span>" +
+          '<button type="button" class="btn-delete" data-id="' + S.escapeHtml(v.id) + '" data-time="' +
+          S.escapeHtml(time) + '" data-dish="' + S.escapeHtml(dish) + '" aria-label="' +
           S.escapeHtml(tr.resultsDelete) + '" title="' + S.escapeHtml(tr.resultsDelete) + '">' + TRASH + "</button></li>";
       }).join("");
       return '<li class="row result' + (names.length ? "" : " zero") + '">' +
@@ -89,7 +89,7 @@
   els.out.addEventListener("click", async e => {
     const btn = e.target.closest(".btn-delete");
     if (!btn) return;
-    const msg = S.fmt(t().resultsDeleteConfirm, { name: btn.dataset.who, dish: btn.dataset.dish });
+    const msg = S.fmt(t().resultsDeleteConfirm, { time: btn.dataset.time, dish: btn.dataset.dish });
     if (!window.confirm(msg)) return;
     btn.disabled = true;
     try { await S.deleteVotes(btn.dataset.id); } catch (err) { console.error(err); window.alert(t().resultsDeleteError); }

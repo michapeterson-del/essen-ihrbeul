@@ -13,7 +13,6 @@
     clear: $("#search-clear"),
     searchRow: $("#search-row"),
     empty: $("#no-results"),
-    name: $("#voter-name"),
     bar: $("#vote-bar"),
     selected: $("#selected-dish"),
     submit: $("#submit"),
@@ -148,8 +147,7 @@
     els.submit.disabled = true;
     els.submit.textContent = t().submitting;
     try {
-      const voterName = els.name.value.trim().slice(0, 60) || null;
-      await S.submitVote({ dish_nr: item.nr, dish_name: item.name, voter_name: voterName, lang });
+      await S.submitVote({ dish_nr: item.nr, dish_name: item.name, lang });
       const voted = { nr: item.nr, name: item.name, at: new Date().toISOString() };
       S.store.set(VOTED_KEY, JSON.stringify(voted));
       showThanks(voted, true);

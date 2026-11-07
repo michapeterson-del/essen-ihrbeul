@@ -4,24 +4,19 @@
 // Umgebungsvariablen:
 //   PORT              Port (Standard 3000)
 //   DATA_DIR          Ordner für votes.json (Standard ./data) – in Coolify als Volume einbinden!
-//   RESULTS_PASSWORD  Wenn gesetzt, sind die Ergebnisse nur mit diesem Passwort sichtbar.
-//   ADMIN_PASSWORD    Wenn gesetzt, kann man mit DELETE /api/votes alle Stimmen löschen.
 
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
-const crypto = require("crypto");
 
 const PORT = Number(process.env.PORT) || 3000;
 const ROOT = __dirname;
 const DATA_DIR = process.env.DATA_DIR || path.join(ROOT, "data");
 const VOTES_FILE = path.join(DATA_DIR, "votes.json");
-const RESULTS_PASSWORD = process.env.RESULTS_PASSWORD || "";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
 const COOKIE = "irrbuehl_voted";
 
 // Nur diese Dateien werden ausgeliefert (server.js, data/ usw. bleiben privat).
-const PUBLIC = /^\/(index\.html|results\.html|menu\.json|i18n\.json|config\.js|(css|js)\/[\w.-]+\.(css|js))$/;
+const PUBLIC = /^\/(index\.html|results\.html|menu\.json|i18n\.json|(css|js)\/[\w.-]+\.(css|js))$/;
 const TYPES = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
@@ -71,30 +66,18 @@ function readBody(req) {
   });
 }
 
-function safeEqual(a, b) {
-  const ha = crypto.createHash("sha256").update(String(a)).digest();
-  const hb = crypto.createHash("sha256").update(String(b)).digest();
-  return crypto.timingSafeEqual(ha, hb);
-}
-function authorized(req, password) {
-  if (!password) return true;
-  const m = /^Bearer (.+)$/.exec(req.headers.authorization || "");
-  return Boolean(m && safeEqual(m[1], password));
-}
-
 function hasVotedCookie(req) {
   return (req.headers.cookie || "").split(/;\s*/).some(c => c.startsWith(COOKIE + "="));
 }
 
 async function handleApi(req, res, url) {
   if (url.pathname === "/api/health") {
-    return send(res, 200, { ok: true, resultsProtected: Boolean(RESULTS_PASSWORD) });
+    return send(res, 200, { ok: true });
   }
 
   if (url.pathname !== "/api/votes") return send(res, 404, { error: "not found" });
 
   if (req.method === "GET") {
-    if (!authorized(req, RESULTS_PASSWORD)) return send(res, 401, { error: "password required" });
     return send(res, 200, votes);
   }
 
@@ -119,13 +102,6 @@ async function handleApi(req, res, url) {
     return send(res, 201, { ok: true }, {
       "Set-Cookie": COOKIE + "=1; Path=/; Max-Age=31536000; HttpOnly; SameSite=Lax" + secure
     });
-  }
-
-  if (req.method === "DELETE") {
-    if (!ADMIN_PASSWORD || !authorized(req, ADMIN_PASSWORD)) return send(res, 401, { error: "unauthorized" });
-    votes = [];
-    await persist();
-    return send(res, 200, { ok: true });
   }
 
   return send(res, 405, { error: "method not allowed" });
@@ -159,5 +135,4 @@ http.createServer((req, res) => {
   }
 }).listen(PORT, () => {
   console.log(`Umfrage läuft auf Port ${PORT} – Stimmen in ${VOTES_FILE} (${votes.length} bisher)`);
-  if (!RESULTS_PASSWORD) console.log("Hinweis: RESULTS_PASSWORD nicht gesetzt – Ergebnisse sind öffentlich.");
 });

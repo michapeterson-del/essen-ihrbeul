@@ -66,83 +66,46 @@
     });
   }
 
-  // ---------- Speicher-Backend ----------
-  // Reihenfolge: eigener Server (server.js, z. B. auf Coolify) → Supabase → Demo (nur Browser).
-  const cfg = window.SURVEY_CONFIG || {};
-  const hasSupabase = Boolean(cfg.supabaseUrl && cfg.supabaseAnonKey);
-  const table = cfg.table || "votes";
-  const RESULTS_KEY = "irrbuehl_results_pw";
-  let mode = null; // "server" | "supabase" | "demo"
+  // ---------- Speicher ----------
+  // Stimmen gehen an server.js (/api/votes). Läuft kein Server (z. B. lokal mit
+  // python -m http.server), speichert die Seite nur im eigenen Browser (Demo-Modus).
+  let mode = null; // "server" | "demo"
 
   async function detectBackend() {
     if (mode) return mode;
     try {
       const res = await fetch("api/health", { cache: "no-store" });
-      if (res.ok && (await res.json()).ok) { mode = "server"; return mode; }
-    } catch (e) { /* kein eigener Server */ }
-    mode = hasSupabase ? "supabase" : "demo";
+      mode = res.ok && (await res.json()).ok ? "server" : "demo";
+    } catch (e) { mode = "demo"; }
     return mode;
   }
 
   function errorWithStatus(msg, status) { const e = new Error(msg); e.status = status; return e; }
 
-  function getResultsPassword() { try { return sessionStorage.getItem(RESULTS_KEY) || ""; } catch (e) { return ""; } }
-  function setResultsPassword(pw) { try { sessionStorage.setItem(RESULTS_KEY, pw); } catch (e) { /* ignore */ } }
-
-  function sbHeaders(extra) {
-    return Object.assign({
-      apikey: cfg.supabaseAnonKey,
-      Authorization: "Bearer " + cfg.supabaseAnonKey,
-      "Content-Type": "application/json"
-    }, extra || {});
-  }
-
   async function submitVote(vote) {
-    await detectBackend();
-    if (mode === "server") {
-      const res = await fetch("api/votes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(vote)
-      });
-      if (!res.ok) throw errorWithStatus("Vote failed: " + res.status, res.status);
-      return;
-    }
-    if (mode === "demo") {
+    if ((await detectBackend()) === "demo") {
       const all = JSON.parse(store.get(LOCAL_VOTES_KEY) || "[]");
       all.push(Object.assign({ created_at: new Date().toISOString() }, vote));
       store.set(LOCAL_VOTES_KEY, JSON.stringify(all));
       return;
     }
-    const res = await fetch(cfg.supabaseUrl.replace(/\/$/, "") + "/rest/v1/" + table, {
+    const res = await fetch("api/votes", {
       method: "POST",
-      headers: sbHeaders({ Prefer: "return=minimal" }),
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(vote)
     });
-    if (!res.ok) throw new Error("Vote failed: " + res.status + " " + (await res.text()));
+    if (!res.ok) throw errorWithStatus("Vote failed: " + res.status, res.status);
   }
 
   async function fetchVotes() {
-    await detectBackend();
-    if (mode === "server") {
-      const pw = getResultsPassword();
-      const res = await fetch("api/votes", {
-        cache: "no-store",
-        headers: pw ? { Authorization: "Bearer " + pw } : {}
-      });
-      if (!res.ok) throw errorWithStatus("Load failed: " + res.status, res.status);
-      return res.json();
-    }
-    if (mode === "demo") return JSON.parse(store.get(LOCAL_VOTES_KEY) || "[]");
-    const url = cfg.supabaseUrl.replace(/\/$/, "") + "/rest/v1/" + table +
-      "?select=dish_nr,dish_name,voter_name,created_at&order=created_at.asc&limit=10000";
-    const res = await fetch(url, { headers: sbHeaders() });
-    if (!res.ok) throw new Error("Load failed: " + res.status);
+    if ((await detectBackend()) === "demo") return JSON.parse(store.get(LOCAL_VOTES_KEY) || "[]");
+    const res = await fetch("api/votes", { cache: "no-store" });
+    if (!res.ok) throw errorWithStatus("Load failed: " + res.status, res.status);
     return res.json();
   }
 
   window.Survey = {
     store, loadJSON, getLang, setLang, fmt, formatPrice, escapeHtml,
-    toggleTheme, translateDom, detectBackend, submitVote, fetchVotes, setResultsPassword
+    toggleTheme, translateDom, detectBackend, submitVote, fetchVotes
   };
 })();
